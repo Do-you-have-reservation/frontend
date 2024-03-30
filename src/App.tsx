@@ -1,26 +1,18 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import BlankSection from "./components/BlankSection";
+import HeaderSection from "./components/HeaderSection";
+import ReservationSection from "./components/ReservationSection";
+import SlideSection from "./components/SlideSection";
 
-function App() {
+const MassageChairReservationSystem: React.FC = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <HeaderSection></HeaderSection>
+      <SlideSection></SlideSection>
+      <BlankSection></BlankSection>
+      <ReservationSection></ReservationSection>
     </div>
   );
-}
+};
 
-export default App;
+export default MassageChairReservationSystem;

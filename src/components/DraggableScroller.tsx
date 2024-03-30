@@ -1,0 +1,39 @@
+import { ReactNode, CSSProperties, useRef } from "react";
+import styled from "@emotion/styled";
+import { useDraggable } from "./useDraggable.ts";
+
+type Props = {
+  children: ReactNode;
+  maxWidth?: number;
+  style?: CSSProperties;
+};
+
+type DivStyleProps = {
+  maxWidth?: number;
+};
+
+const Container = styled.div<DivStyleProps>`
+  display: flex;
+  overflow: scroll;
+  max-width: ${(props) => props.maxWidth && props.maxWidth};
+`;
+
+const DraggableScroller = ({ children, maxWidth, style }: Props) => {
+  const containerRef = useRef<HTMLElement>(null);
+  const events = useDraggable(containerRef);
+
+  return (
+    <>
+      <Container
+        maxWidth={maxWidth}
+        style={style}
+        ref={containerRef}
+        {...events}
+      >
+        {children}
+      </Container>
+    </>
+  );
+};
+
+export default DraggableScroller;
