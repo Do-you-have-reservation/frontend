@@ -8,8 +8,8 @@ const MassageChairReservationSystem: React.FC = () => {
   return (
     <div>
       <HeaderSection></HeaderSection>
-      <SlideSection></SlideSection>
       <BlankSection></BlankSection>
+      <SlideSection></SlideSection>
       <ReservationSection></ReservationSection>
     </div>
   );

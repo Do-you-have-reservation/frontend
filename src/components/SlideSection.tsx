@@ -1,49 +1,101 @@
+import React, { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import React from "react";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { useState } from "react";
-import DraggableScroller from "./DraggableScroller";
+import { style } from "../../node_modules/postcss-minify-font-values/types/lib/keywords.d";
 
-interface Item {
-  id: number;
-  content: string; // 사각형 내부에 표시될 내용
-}
+const ScrollArea = styled.div`
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: scroll;
+  width: 100%;
+  height: 500px;
+`;
 
-const SlideSection: React.FC = () => {
-  const [items, setItems] = useState([{ id: 1, content: "Item 1" }]); // 초기 아이템 예시
+const Item = styled.div`
+  flex: 0 0 500px;
+  margin: 0 10px;
+  background-color: #ccc;
+`;
 
-  const handleAddItem = () => {
-    const newItem = {
-      id: items.length + 1,
-      content: `Item ${items.length + 1}`,
+const SlideSection = () => {
+  const [items, setItems] = useState<any[]>([]);
+
+  useEffect(() => {
+    const generateItems = () => {
+      const itemsArr = [];
+      for (let i = 0; i < 10; i++) {
+        itemsArr.push(
+          <Item key={i}>
+            <div
+              style={{ width: "100%", height: "50px", backgroundColor: "blue" }}
+            >
+              안녕하세요
+            </div>
+            <div
+              style={{
+                width: "100%",
+                height: "50px",
+                marginTop: "5px",
+                backgroundColor: "blue",
+              }}
+            >
+              안녕하세요
+            </div>
+            <div
+              style={{
+                width: "100%",
+                height: "50px",
+                marginTop: "5px",
+                backgroundColor: "blue",
+              }}
+            >
+              안녕하세요
+            </div>
+            <div
+              style={{
+                width: "100%",
+                height: "50px",
+                marginTop: "5px",
+                backgroundColor: "blue",
+              }}
+            >
+              안녕하세요
+            </div>
+            <div
+              style={{
+                width: "100%",
+                height: "50px",
+                marginTop: "5px",
+                backgroundColor: "blue",
+              }}
+            >
+              안녕하세요
+            </div>
+            <div
+              style={{
+                width: "100%",
+                height: "50px",
+                marginTop: "5px",
+                backgroundColor: "blue",
+              }}
+            >
+              안녕하세요
+            </div>
+          </Item>
+        );
+      }
+      setItems(itemsArr);
     };
-    setItems([...items, newItem]);
-  };
-  const settings = {
-    dots: true,
-    infinite: false,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 4,
-  };
+
+    generateItems();
+  }, [items]);
+
   return (
-    <DraggableScroller style={customStyle}>
-      {[...Array(5)].map((item, index) => (
-        <CardItem key={index} onClick={handleClick} />
-      ))}
-    </DraggableScroller>
+    <ScrollArea>
+      {items}
+      <Item style={{ backgroundColor: "red" }} /> {/* 상단 고정 사각형 */}
+    </ScrollArea>
   );
 };
 
-const SlideDiv = styled.div`
-  display: flex;
-  text-align: center;
-  flex-direction: column;
-  width: 100%;
-  height: 300px;
-  justify-content: center;
-  align-items: center;
-  background-color: pink;
-`;
 export default SlideSection;
