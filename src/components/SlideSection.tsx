@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import { style } from "../../node_modules/postcss-minify-font-values/types/lib/keywords.d";
+import CountdownApp from "./Couontdown";
 
 const ScrollArea = styled.div`
   display: flex;
@@ -17,82 +17,38 @@ const Item = styled.div`
   background-color: #ccc;
 `;
 
+function createItems() {
+  const itemsArr = [];
+  for (let i = 0; i < 10; i++) {
+    itemsArr.push(i);
+  }
+  return itemsArr;
+}
+
 const SlideSection = () => {
-  const [items, setItems] = useState<any[]>([]);
+  const [items, setItems] = useState<number[]>([]);
 
   useEffect(() => {
-    const generateItems = () => {
+    function createItems() {
       const itemsArr = [];
       for (let i = 0; i < 10; i++) {
-        itemsArr.push(
-          <Item key={i}>
-            <div
-              style={{ width: "100%", height: "50px", backgroundColor: "blue" }}
-            >
-              안녕하세요
-            </div>
-            <div
-              style={{
-                width: "100%",
-                height: "50px",
-                marginTop: "5px",
-                backgroundColor: "blue",
-              }}
-            >
-              안녕하세요
-            </div>
-            <div
-              style={{
-                width: "100%",
-                height: "50px",
-                marginTop: "5px",
-                backgroundColor: "blue",
-              }}
-            >
-              안녕하세요
-            </div>
-            <div
-              style={{
-                width: "100%",
-                height: "50px",
-                marginTop: "5px",
-                backgroundColor: "blue",
-              }}
-            >
-              안녕하세요
-            </div>
-            <div
-              style={{
-                width: "100%",
-                height: "50px",
-                marginTop: "5px",
-                backgroundColor: "blue",
-              }}
-            >
-              안녕하세요
-            </div>
-            <div
-              style={{
-                width: "100%",
-                height: "50px",
-                marginTop: "5px",
-                backgroundColor: "blue",
-              }}
-            >
-              안녕하세요
-            </div>
-          </Item>
-        );
+        itemsArr.push(i);
       }
       setItems(itemsArr);
-    };
+    }
 
-    generateItems();
-  }, [items]);
+    createItems();
+  }, [createItems]);
 
   return (
     <ScrollArea>
-      {items}
+      {items.map((index) => {
+        return (
+          <Item key={index}>
+            <CountdownApp />
+          </Item>
+        );
+      })}
       <Item style={{ backgroundColor: "red" }} /> {/* 상단 고정 사각형 */}
     </ScrollArea>
   );
