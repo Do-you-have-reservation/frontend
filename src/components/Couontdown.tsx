@@ -4,8 +4,7 @@ const STATUS = {
   STARTED: "Started",
   STOPPED: "Stopped",
 };
-
-const INITIAL_COUNT = 120;
+const INITIAL_COUNT = 60 * 15;
 
 export default function Countdown() {
   const [secondsRemaining, setSecondsRemaining] = useState(INITIAL_COUNT);
@@ -15,6 +14,36 @@ export default function Countdown() {
   const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
   const minutesToDisplay = minutesRemaining % 60;
   const hoursToDisplay = (minutesRemaining - minutesToDisplay) / 60;
+
+  function countUp360() {
+    setSecondsRemaining(secondsRemaining + 3600);
+    console.log(secondsRemaining);
+  }
+  function countDown360() {
+    if (secondsRemaining >= 3600) {
+      setSecondsRemaining(secondsRemaining - 3600);
+      console.log(secondsRemaining);
+    }
+  }
+
+  function countUp60() {
+    setSecondsRemaining(secondsRemaining + 60);
+    console.log(secondsRemaining);
+  }
+  function countDown60() {
+    if (secondsRemaining >= 60) {
+      setSecondsRemaining(secondsRemaining - 60);
+      console.log(secondsRemaining);
+    }
+  }
+  function countUp1() {
+    setSecondsRemaining(secondsRemaining + 1);
+    console.log(secondsRemaining);
+  }
+  function countDown1() {
+    setSecondsRemaining(secondsRemaining - 1);
+    console.log(secondsRemaining);
+  }
 
   const handleStart = () => {
     setStatus(STATUS.STARTED);
@@ -48,9 +77,22 @@ export default function Countdown() {
       <button onClick={handleReset} type="button">
         Reset
       </button>
-      <div style={{ padding: 20 }}>
-        {twoDigits(hoursToDisplay)}:{twoDigits(minutesToDisplay)}:
-        {twoDigits(secondsToDisplay)}
+      <div style={{ flexDirection: "row", display: "flex" }}>
+        <div style={{ flexDirection: "column", display: "flex" }}>
+          <button onClick={countUp360}>up</button>
+          <input value={twoDigits(hoursToDisplay)}></input>
+          <button onClick={countDown360}>down</button>
+        </div>
+        <div style={{ flexDirection: "column", display: "flex" }}>
+          <button onClick={countUp60}>up</button>
+          <input value={twoDigits(minutesToDisplay)}></input>
+          <button onClick={countDown60}>down</button>
+        </div>
+        <div style={{ flexDirection: "column", display: "flex" }}>
+          <button onClick={countUp1}>up</button>
+          <input value={twoDigits(secondsToDisplay)}></input>
+          <button onClick={countDown1}>down</button>
+        </div>
       </div>
       <div>Status: {status}</div>
     </div>

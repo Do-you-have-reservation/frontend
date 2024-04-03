@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import CountdownApp from "./Couontdown";
+import Countdown from "./Couontdown";
 
 const ScrollArea = styled.div`
   display: flex;
@@ -45,7 +45,7 @@ const SlideSection = () => {
       {items.map((index) => {
         return (
           <Item key={index}>
-            <CountdownApp />
+            <Countdown />
           </Item>
         );
       })}
