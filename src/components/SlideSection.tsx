@@ -1,3 +1,4 @@
+import { addMachine, getReservations } from "../firebaseConfig";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import Countdown from "./Couontdown";
@@ -17,6 +18,10 @@ const Item = styled.div`
   background-color: #ccc;
 `;
 
+const Reservations = (props: any) => {
+  return <div>{props.name}</div>;
+};
+
 function createItems() {
   const itemsArr = [];
   for (let i = 0; i < 10; i++) {
@@ -26,15 +31,13 @@ function createItems() {
 }
 
 const SlideSection = () => {
-  const [items, setItems] = useState<number[]>([]);
+  const [items, setItems] = useState<any>([]);
 
   useEffect(() => {
-    function createItems() {
-      const itemsArr = [];
-      for (let i = 0; i < 10; i++) {
-        itemsArr.push(i);
-      }
-      setItems(itemsArr);
+    async function createItems() {
+      const reservations = await getReservations();
+      await setItems(reservations);
+      await console.log(reservations);
     }
 
     createItems();
@@ -42,14 +45,26 @@ const SlideSection = () => {
 
   return (
     <ScrollArea>
-      {items.map((index) => {
+      {items.map((index: any) => {
         return (
           <Item key={index}>
             <Countdown />
+            {index.reservations.map((reservation: string) => {
+              return <Reservations name={reservation}></Reservations>;
+            })}
+            <button onClick={() => getReservations()}>get</button>
+            <button onClick={() => addMachine()}>add</button>
           </Item>
         );
       })}
-      <Item style={{ backgroundColor: "red" }} /> {/* 상단 고정 사각형 */}
+      <Item style={{ backgroundColor: "red" }}>
+        <button
+          onClick={() => addMachine()}
+          style={{ width: "100%", height: "100%" }}
+        >
+          추가하기
+        </button>
+      </Item>
     </ScrollArea>
   );
 };
