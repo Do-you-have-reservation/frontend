@@ -11,8 +11,6 @@ import styled from "styled-components";
 import Countdown from "./Couontdown";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
-import style from "../../node_modules/dom-helpers/cjs/css.d";
-import text from "../../node_modules/dom-helpers/cjs/text.d";
 
 const ScrollArea = styled.div`
   display: flex;
