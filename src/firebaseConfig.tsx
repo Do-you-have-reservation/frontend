@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore/lite";
+import { getFirestore, updateDoc } from "firebase/firestore/lite";
 import {
   getDoc,
   doc,
@@ -38,8 +38,44 @@ export async function getReservations() {
   return data;
 }
 
+export async function getElders() {
+  const query = await getDocs(collection(db, "elders"));
+
+  const data: { id: string; name: any }[] = [];
+  data.push({ id: "없음", name: "없음" });
+  query.forEach((doc) => {
+    console.log(doc.id, doc.data()["name"]);
+    data.push({ id: doc.id, name: doc.data()["name"] });
+  });
+
+  console.log(data);
+  return data;
+}
+
+export async function addElder() {
+  await addDoc(collection(db, "elders"), {
+    name: "김진상",
+  });
+}
+
 export async function addMachine() {
   await addDoc(collection(db, "reservations"), {
     datas: ["없음", "없음", "없음", "없음", "없음"],
+  });
+}
+
+export async function updateElder(
+  id: string,
+  name: string,
+  reservationIdx: number,
+  currentReservations: any
+) {
+  console.log(currentReservations);
+  console.log(reservationIdx);
+  console.log(name);
+  currentReservations[reservationIdx] = name;
+
+  updateDoc(doc(db, "reservations", id), {
+    datas: currentReservations,
   });
 }
