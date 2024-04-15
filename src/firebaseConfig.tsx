@@ -63,7 +63,7 @@ export async function addMachine() {
   });
 }
 
-export async function updateElder(
+export async function addReservationElder(
   id: string,
   name: string,
   currentReservations: any
@@ -73,6 +73,21 @@ export async function updateElder(
   console.log(name);
 
   currentReservations.push(name);
+
+  await updateDoc(doc(db, "reservations", id), {
+    datas: currentReservations,
+  });
+}
+export async function updateReservationElder(
+  id: string,
+  name: string,
+  reservationIdx: number,
+  currentReservations: any
+) {
+  console.log(id);
+  console.log(currentReservations);
+  console.log(name);
+  currentReservations[reservationIdx] = name;
 
   await updateDoc(doc(db, "reservations", id), {
     datas: currentReservations,

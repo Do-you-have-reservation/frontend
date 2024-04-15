@@ -1,9 +1,9 @@
 import {
-  addElder,
   addMachine,
+  addReservationElder,
   getElders,
   getReservations,
-  updateElder,
+  updateReservationElder,
 } from "../firebaseConfig";
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState, useEffect } from "react";
@@ -29,12 +29,16 @@ const Item = styled.div`
 
 interface currentElderInfo {
   machineId: string;
+  machineIdx: number;
+  reservationIdx: number;
   currentReservations: any;
 }
 
 const SlideSection = () => {
   const [items, setItems] = useState<any>([]);
-  const [modalShow, setModalShow] = React.useState(false);
+  const [addModalShow, setAddModalShow] = React.useState(false);
+  const [updateModalShow, setUpdateModalShow] = React.useState(false);
+
   const [elders, setElders] = useState<any>([]);
   const [currentElderInfo, setCurrentElderInfo] = useState<currentElderInfo>();
 
@@ -46,29 +50,55 @@ const SlideSection = () => {
     await console.log(reservations);
   }
 
-  async function createElderModal(props: any) {
+  async function createAddElderModal(props: any) {
     setElders(await getElders());
     await console.log(elders);
     await setCurrentElderInfo({
       machineId: props.machineId,
       currentReservations: props.currentReservations,
+      machineIdx: props.machineIdx,
+      reservationIdx: props.reservationIdx,
     });
-    await setModalShow(true);
+    await setAddModalShow(true);
+  }
+  async function createUpdateElderModal(props: any) {
+    setElders(await getElders());
+    await console.log(elders);
+    await setCurrentElderInfo({
+      machineId: props.machineId,
+      currentReservations: props.currentReservations,
+      machineIdx: props.machineIdx,
+      reservationIdx: props.reservationIdx,
+    });
+    await setUpdateModalShow(true);
   }
 
-  async function updateCurrentElderInfo(
+  async function addCurrentElderInfo(
     currentElderInfo: currentElderInfo,
     currentName: string
   ) {
-    await updateElder(
+    await addReservationElder(
       currentElderInfo.machineId,
       currentName,
       currentElderInfo.currentReservations
     );
-    setModalShow(false);
+    setAddModalShow(false);
   }
 
-  function MyVerticallyCenteredModal(props: any) {
+  async function updateCurrentElderInfo(
+    updateCurrentElderInfo: currentElderInfo,
+    currentName: string
+  ) {
+    await updateReservationElder(
+      updateCurrentElderInfo.machineId,
+      currentName,
+      updateCurrentElderInfo.reservationIdx,
+      updateCurrentElderInfo.currentReservations
+    );
+    setUpdateModalShow(false);
+  }
+
+  function UpdateVerticallyCenteredModal(props: any) {
     return (
       <Modal
         {...props}
@@ -112,6 +142,50 @@ const SlideSection = () => {
     );
   }
 
+  function AddVerticallyCenteredModal(props: any) {
+    return (
+      <Modal
+        {...props}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">예약하기</Modal.Title>
+        </Modal.Header>
+        <Modal.Body id="modal-dialog modal-dialog-scrollable">
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            {props.elders.map((elder: any) => {
+              return (
+                <button
+                  style={{
+                    width: "100%",
+                    height: "200px",
+                    backgroundColor: "skyblue",
+                    marginTop: "5px",
+                  }}
+                  onClick={() =>
+                    addCurrentElderInfo(props.currentElderInfo, elder.name)
+                  }
+                >
+                  {elder.name}
+                </button>
+              );
+            })}
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={props.onHide}>Close</Button>
+        </Modal.Footer>
+      </Modal>
+    );
+  }
+
   const Reservations = (props: any) => {
     return (
       <button
@@ -124,6 +198,14 @@ const SlideSection = () => {
           justifyContent: "center",
           alignItems: "center",
         }}
+        onClick={() =>
+          createUpdateElderModal({
+            machineId: props.machineId,
+            machineIdx: props.machineIdx,
+            reservationIdx: props.reservationIdx,
+            currentReservations: props.currentReservations,
+          })
+        }
       >
         {props.name}
       </button>
@@ -154,6 +236,8 @@ const SlideSection = () => {
                   return (
                     <Reservations
                       machineId={index.id}
+                      machineIdx={machineIdx}
+                      reservationIdx={reservationIdx}
                       currentReservations={index.reservations}
                       name={reservation}
                     ></Reservations>
@@ -171,7 +255,7 @@ const SlideSection = () => {
                   alignItems: "center",
                 }}
                 onClick={() =>
-                  createElderModal({
+                  createAddElderModal({
                     machineId: index.id,
                     currentReservations: index.reservations,
                   })
@@ -191,9 +275,15 @@ const SlideSection = () => {
           </button>
         </Item>
       </ScrollArea>
-      <MyVerticallyCenteredModal
-        show={modalShow}
-        onHide={() => setModalShow(false)}
+      <AddVerticallyCenteredModal
+        show={addModalShow}
+        onHide={() => setAddModalShow(false)}
+        elders={elders}
+        currentElderInfo={currentElderInfo}
+      />
+      <UpdateVerticallyCenteredModal
+        show={updateModalShow}
+        onHide={() => setUpdateModalShow(false)}
         elders={elders}
         currentElderInfo={currentElderInfo}
       />
