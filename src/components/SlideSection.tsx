@@ -28,8 +28,6 @@ const Item = styled.div`
 `;
 
 interface currentElderInfo {
-  machineIdx: number;
-  reservationIdx: number;
   machineId: string;
   currentReservations: any;
 }
@@ -44,8 +42,6 @@ const SlideSection = () => {
     setElders(await getElders());
     await console.log(elders);
     await setCurrentElderInfo({
-      machineIdx: props.machineIdx,
-      reservationIdx: props.reservationIdx,
       machineId: props.machineId,
       currentReservations: props.currentReservations,
     });
@@ -56,14 +52,12 @@ const SlideSection = () => {
     currentElderInfo: currentElderInfo,
     currentName: string
   ) {
-    console.log(
-      await updateElder(
-        currentElderInfo.machineId,
-        currentName,
-        currentElderInfo.reservationIdx,
-        currentElderInfo.currentReservations
-      )
+    await updateElder(
+      currentElderInfo.machineId,
+      currentName,
+      currentElderInfo.currentReservations
     );
+    setModalShow(false);
   }
 
   function MyVerticallyCenteredModal(props: any) {
@@ -122,7 +116,6 @@ const SlideSection = () => {
           justifyContent: "center",
           alignItems: "center",
         }}
-        onClick={() => createElderModal(props)}
       >
         {props.name}
       </button>
@@ -145,12 +138,11 @@ const SlideSection = () => {
           return (
             <Item key={index}>
               <Countdown />
+
               {index.reservations.map(
                 (reservation: string, reservationIdx: any) => {
                   return (
                     <Reservations
-                      mahcineIdx={machineIdx}
-                      reservationIdx={reservationIdx}
                       machineId={index.id}
                       currentReservations={index.reservations}
                       name={reservation}
@@ -158,6 +150,25 @@ const SlideSection = () => {
                   );
                 }
               )}
+              <button
+                style={{
+                  width: "100%",
+                  height: "140px",
+                  backgroundColor: "skyblue",
+                  marginTop: "5px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onClick={() =>
+                  createElderModal({
+                    machineId: index.id,
+                    currentReservations: index.reservations,
+                  })
+                }
+              >
+                추가하기
+              </button>
             </Item>
           );
         })}

@@ -42,7 +42,6 @@ export async function getElders() {
   const query = await getDocs(collection(db, "elders"));
 
   const data: { id: string; name: any }[] = [];
-  data.push({ id: "없음", name: "없음" });
   query.forEach((doc) => {
     console.log(doc.id, doc.data()["name"]);
     data.push({ id: doc.id, name: doc.data()["name"] });
@@ -60,22 +59,22 @@ export async function addElder(name: string) {
 
 export async function addMachine() {
   await addDoc(collection(db, "reservations"), {
-    datas: ["없음", "없음", "없음", "없음", "없음"],
+    datas: [],
   });
 }
 
 export async function updateElder(
   id: string,
   name: string,
-  reservationIdx: number,
   currentReservations: any
 ) {
+  console.log(id);
   console.log(currentReservations);
-  console.log(reservationIdx);
   console.log(name);
-  currentReservations[reservationIdx] = name;
 
-  updateDoc(doc(db, "reservations", id), {
+  currentReservations.push(name);
+
+  await updateDoc(doc(db, "reservations", id), {
     datas: currentReservations,
   });
 }
