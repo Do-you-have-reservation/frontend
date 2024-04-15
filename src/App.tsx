@@ -5,8 +5,13 @@ import ReservationSection from "./components/ReservationSection";
 import SlideSection from "./components/SlideSection";
 import Button from "react-bootstrap/Button";
 import { IoIosAddCircle } from "react-icons/io";
+import AddElderModal from "./components/AddElderModal";
 
 const MassageChairReservationSystem: React.FC = () => {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleShowModal = () => setShowModal(true);
+  const handleCloseModal = () => setShowModal(false);
   return (
     <div>
       <HeaderSection></HeaderSection>
@@ -24,9 +29,11 @@ const MassageChairReservationSystem: React.FC = () => {
           bottom: "20px",
           zIndex: "1000",
         }}
+        onClick={handleShowModal}
       >
         <IoIosAddCircle color="orange" size={150} />
       </Button>
+      <AddElderModal show={showModal} handleClose={handleCloseModal} />
     </div>
   );
 };

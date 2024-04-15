@@ -52,9 +52,9 @@ export async function getElders() {
   return data;
 }
 
-export async function addElder() {
+export async function addElder(name: string) {
   await addDoc(collection(db, "elders"), {
-    name: "김진상",
+    name: name,
   });
 }
 

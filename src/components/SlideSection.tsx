@@ -158,10 +158,6 @@ const SlideSection = () => {
                   );
                 }
               )}
-              <button onClick={() => getReservations()}>getReservations</button>
-              <button onClick={() => addMachine()}>addMachine</button>
-              <button onClick={() => getElders()}>getElders</button>
-              <button onClick={() => addElder()}>addElder</button>
             </Item>
           );
         })}
