@@ -38,6 +38,14 @@ const SlideSection = () => {
   const [elders, setElders] = useState<any>([]);
   const [currentElderInfo, setCurrentElderInfo] = useState<currentElderInfo>();
 
+  async function createMachine() {
+    await addMachine();
+
+    const reservations = await getReservations();
+    await setItems(reservations);
+    await console.log(reservations);
+  }
+
   async function createElderModal(props: any) {
     setElders(await getElders());
     await console.log(elders);
@@ -131,6 +139,8 @@ const SlideSection = () => {
     createItems();
   }, []);
 
+  useEffect(() => {}, [elders]);
+
   return (
     <>
       <ScrollArea>
@@ -174,7 +184,7 @@ const SlideSection = () => {
         })}
         <Item style={{ backgroundColor: "red" }}>
           <button
-            onClick={() => addMachine()}
+            onClick={() => createMachine()}
             style={{ width: "100%", height: "100%" }}
           >
             추가하기
