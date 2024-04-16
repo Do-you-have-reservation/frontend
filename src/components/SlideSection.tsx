@@ -230,7 +230,10 @@ const SlideSection = (props: any, { handleAddToQueue }: Props) => {
         {items.map((index: any, machineIdx: any) => {
           return (
             <Item key={index}>
-              <Countdown currentReservations={index.reservations} />
+              <Countdown
+                currentReservations={index.reservations}
+                handleAddToQueue={handleAddToQueue}
+              />
 
               {index.reservations.map(
                 (reservation: string, reservationIdx: any) => {

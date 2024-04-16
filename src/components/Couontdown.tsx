@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import { speak } from "../utils/tts";
+import { Props } from "../interfaces/Queue.interface";
 
 const STATUS = {
   STARTED: "Started",
   STOPPED: "Stopped",
 };
-const INITIAL_COUNT = 60 * 15;
+// const INITIAL_COUNT = 60 * 15;
+const INITIAL_COUNT = 5;
 
-export default function Countdown(props: any) {
+export default function Countdown(props: any, { handleAddToQueue }: Props) {
   const [secondsRemaining, setSecondsRemaining] = useState(INITIAL_COUNT);
   const [status, setStatus] = useState(STATUS.STOPPED);
+  const [stopCount, setStopCount] = useState(props.currentReservations.length);
 
   const secondsToDisplay = secondsRemaining % 60;
   const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
@@ -48,12 +51,9 @@ export default function Countdown(props: any) {
 
   const handleStart = () => {
     setStatus(STATUS.STARTED);
-    speechSynthesis.cancel();
-    speak(
-      "안녕하세요 백순이 어르신 마사지예약시스템에 오신걸 환영합니다. 좋은 시간 되십시오",
-      window.speechSynthesis
-    );
+    console.log(props.currentReservations);
   };
+
   const handleStop = () => {
     setStatus(STATUS.STOPPED);
   };
@@ -62,11 +62,25 @@ export default function Countdown(props: any) {
     setSecondsRemaining(INITIAL_COUNT);
   };
   useInterval(
-    () => {
+    async () => {
       if (secondsRemaining > 0) {
         setSecondsRemaining(secondsRemaining - 1);
       } else {
-        setStatus(STATUS.STOPPED);
+        await setStatus(STATUS.STOPPED);
+        await setSecondsRemaining(INITIAL_COUNT);
+        await setStopCount(stopCount - 1);
+
+        await console.log(stopCount);
+        await console.log(props.currentReservations);
+
+        if (stopCount - 1 > 0) {
+          await console.log("다시 반복합니다.");
+          await handleStart();
+        }
+        if (stopCount - 1 === 0) {
+          setStopCount(props.currentReservations.length);
+          await console.log("reservation이 모두 종료 되었습니다.");
+        }
       }
     },
     status === STATUS.STARTED ? 1000 : null
