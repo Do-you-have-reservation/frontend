@@ -11,6 +11,7 @@ import styled from "styled-components";
 import Countdown from "./Couontdown";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+import { Props } from "../interfaces/Queue.interface";
 
 const ScrollArea = styled.div`
   display: flex;
@@ -34,7 +35,7 @@ interface currentElderInfo {
   currentReservations: any;
 }
 
-const SlideSection = () => {
+const SlideSection = (props: any, { handleAddToQueue }: Props) => {
   const [items, setItems] = useState<any>([]);
   const [addModalShow, setAddModalShow] = React.useState(false);
   const [updateModalShow, setUpdateModalShow] = React.useState(false);
@@ -229,7 +230,7 @@ const SlideSection = () => {
         {items.map((index: any, machineIdx: any) => {
           return (
             <Item key={index}>
-              <Countdown />
+              <Countdown currentReservations={index.reservations} />
 
               {index.reservations.map(
                 (reservation: string, reservationIdx: any) => {

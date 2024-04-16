@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import { speak } from "../utils/tts";
 
 const STATUS = {
   STARTED: "Started",
@@ -6,7 +7,7 @@ const STATUS = {
 };
 const INITIAL_COUNT = 60 * 15;
 
-export default function Countdown() {
+export default function Countdown(props: any) {
   const [secondsRemaining, setSecondsRemaining] = useState(INITIAL_COUNT);
   const [status, setStatus] = useState(STATUS.STOPPED);
 
@@ -47,6 +48,11 @@ export default function Countdown() {
 
   const handleStart = () => {
     setStatus(STATUS.STARTED);
+    speechSynthesis.cancel();
+    speak(
+      "안녕하세요 백순이 어르신 마사지예약시스템에 오신걸 환영합니다. 좋은 시간 되십시오",
+      window.speechSynthesis
+    );
   };
   const handleStop = () => {
     setStatus(STATUS.STOPPED);
