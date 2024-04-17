@@ -1,12 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
+import Button from "react-bootstrap/esm/Button";
 import { styled } from "styled-components";
 
 const STATUS = {
-  STARTED: "Started",
-  STOPPED: "Stopped",
+  STARTED: "진행",
+  STOPPED: "정지",
 };
 // const INITIAL_COUNT = 60 * 15;
-const INITIAL_COUNT = 30;
+const INITIAL_COUNT = 60 * 15;
 
 //바꿔보자 stopCount = 0에서 올려가는 방법으로
 
@@ -93,33 +94,60 @@ export const Countdown = (props: any) => {
 
   return (
     <div className="App">
-      <button onClick={() => handleStart(0)} type="button">
-        Start
-      </button>
-      <button onClick={handleStop} type="button">
-        Stop
-      </button>
-      <button onClick={handleReset} type="button">
-        Reset
-      </button>
-      <div style={{ flexDirection: "row", display: "flex" }}>
+      <BorderdDiv style={{ display: "flex", justifyContent: "center" }}>
+        <Button
+          style={{ margin: "5px" }}
+          onClick={() => handleStart(0)}
+          type="button"
+        >
+          시작
+        </Button>
+        <Button style={{ margin: "5px" }} onClick={handleStop} type="button">
+          정지
+        </Button>
+        <Button style={{ margin: "5px" }} onClick={handleReset} type="button">
+          리셋
+        </Button>
+      </BorderdDiv>
+
+      <BorderdDiv style={{ flexDirection: "row", display: "flex" }}>
         <div style={{ flexDirection: "column", display: "flex" }}>
           <button onClick={countUp360}>up</button>
-          <input value={twoDigits(hoursToDisplay)}></input>
+          <BorderdDiv>
+            <input
+              style={{ textAlign: "center" }}
+              value={twoDigits(hoursToDisplay)}
+            ></input>
+          </BorderdDiv>
+
           <button onClick={countDown360}>down</button>
         </div>
         <div style={{ flexDirection: "column", display: "flex" }}>
           <button onClick={countUp60}>up</button>
-          <input value={twoDigits(minutesToDisplay)}></input>
+          <BorderdDiv>
+            <input
+              style={{ textAlign: "center" }}
+              value={twoDigits(minutesToDisplay)}
+            ></input>
+          </BorderdDiv>
+
           <button onClick={countDown60}>down</button>
         </div>
         <div style={{ flexDirection: "column", display: "flex" }}>
           <button onClick={countUp1}>up</button>
-          <input value={twoDigits(secondsToDisplay)}></input>
+          <BorderdDiv>
+            <input
+              style={{ textAlign: "center" }}
+              value={twoDigits(secondsToDisplay)}
+            ></input>
+          </BorderdDiv>
+
           <button onClick={countDown1}>down</button>
         </div>
-      </div>
-      <div>Status: {status}</div>
+      </BorderdDiv>
+      <BorderdDiv style={{ display: "flex", justifyContent: "center" }}>
+        상태 : {status}
+      </BorderdDiv>
     </div>
   );
 };
@@ -147,3 +175,18 @@ function useInterval(callback: any, delay: any) {
 
 // https://stackoverflow.com/a/2998874/1673761
 const twoDigits = (num: any) => String(num).padStart(2, "0");
+const BorderdDiv = styled.div`
+  margin: 4px;
+  border-radius: 3px;
+  border-color: black;
+  border-style: solid;
+  border-width: 3px;
+`;
+
+const Dashboard = styled.div`
+  margin: 4px;
+  border-radius: 3px;
+  border-color: black;
+  border-style: solid;
+  border-width: 3px;
+`;
