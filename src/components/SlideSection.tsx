@@ -270,7 +270,7 @@ const SlideSection = (props: any, { handleAddToQueue }: Props) => {
             </Item>
           );
         })}
-        <Item style={{ backgroundColor: "red" }}>
+        <Item style={{ backgroundColor: "skyblue" }}>
           <button
             onClick={() => createMachine()}
             style={{ width: "100%", height: "100%" }}
