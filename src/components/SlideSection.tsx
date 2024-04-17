@@ -23,12 +23,17 @@ const ScrollArea = styled.div`
   overflow-y: scroll;
   width: 100%;
   height: 1000px;
+  margin: 4px;
+  border-radius: 3px;
+  border-color: black;
+  border-style: solid;
+  border-width: 3px;
 `;
 
 const Item = styled.div`
   flex: 0 0 500px;
   margin: 0 10px;
-  background-color: #ccc;
+  background-color: white;
 `;
 
 interface currentElderInfo {
@@ -222,7 +227,7 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
           style={{
             width: "100%",
             height: "140px",
-            backgroundColor: "skyblue",
+            backgroundColor: "#ebd2a4",
             marginTop: "5px",
             display: "flex",
             justifyContent: "center",
@@ -240,7 +245,7 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
           {props.name}
         </button>
         <button
-          style={{ background: "skyblue", marginTop: "5px" }}
+          style={{ background: "orange", marginTop: "5px" }}
           onClick={() =>
             deleteCurrentElderInfo(
               {
@@ -276,58 +281,64 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
         {items.map((index: any, machineIdx: any) => {
           return (
             <Item key={index}>
-              <div style={{ display: "flex", flexDirection: "row" }}>
+              <BorderdDiv style={{ display: "flex", flexDirection: "row" }}>
                 <Countdown
                   currentMachineIdx={machineIdx}
                   currentReservations={index.reservations}
                   handleAddToQueue={handleAddToQueue}
                 />
-                <button onClick={() => deleteMachineAndFetch(index.id)}>
+                <button
+                  style={{ background: "orange", width: "30px" }}
+                  onClick={() => deleteMachineAndFetch(index.id)}
+                >
                   삭제
                 </button>
-              </div>
+              </BorderdDiv>
 
-              {index.reservations.map(
-                (reservation: string, reservationIdx: any) => {
-                  return (
-                    <Reservations
-                      machineId={index.id}
-                      machineIdx={machineIdx}
-                      reservationIdx={reservationIdx}
-                      currentReservations={index.reservations}
-                      name={reservation}
-                    ></Reservations>
-                  );
-                }
-              )}
-              <button
-                style={{
-                  width: "100%",
-                  height: "140px",
-                  backgroundColor: "skyblue",
-                  marginTop: "5px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-                onClick={() =>
-                  createAddElderModal({
-                    machineId: index.id,
-                    currentReservations: index.reservations,
-                  })
-                }
-              >
-                추가하기
-              </button>
+              <BorderdDiv>
+                {" "}
+                {index.reservations.map(
+                  (reservation: string, reservationIdx: any) => {
+                    return (
+                      <Reservations
+                        machineId={index.id}
+                        machineIdx={machineIdx}
+                        reservationIdx={reservationIdx}
+                        currentReservations={index.reservations}
+                        name={reservation}
+                      ></Reservations>
+                    );
+                  }
+                )}
+                <button
+                  style={{
+                    width: "100%",
+                    height: "140px",
+                    backgroundColor: "orange",
+                    marginTop: "5px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                  onClick={() =>
+                    createAddElderModal({
+                      machineId: index.id,
+                      currentReservations: index.reservations,
+                    })
+                  }
+                >
+                  추가하기
+                </button>
+              </BorderdDiv>
             </Item>
           );
         })}
-        <Item style={{ backgroundColor: "skyblue" }}>
+        <Item style={{ backgroundColor: "##ebd2a4" }}>
           <button
             onClick={() => createMachine()}
             style={{ width: "100%", height: "100%" }}
           >
-            추가하기
+            안마기 추가
           </button>
         </Item>
       </ScrollArea>
@@ -346,5 +357,12 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
     </>
   );
 };
+const BorderdDiv = styled.div`
+  margin: 4px;
+  border-radius: 3px;
+  border-color: black;
+  border-style: solid;
+  border-width: 3px;
+`;
 
 export default SlideSection;

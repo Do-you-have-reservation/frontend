@@ -40,7 +40,6 @@ const MassageChairReservationSystem: React.FC = () => {
       <HeaderSection></HeaderSection>
       <BlankSection></BlankSection>
       <SlideSection handleAddToQueue={handleAddToQueue}></SlideSection>
-      <ReservationSection></ReservationSection>
       <Button
         variant="outlined"
         size="lg"

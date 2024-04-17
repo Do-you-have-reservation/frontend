@@ -18,7 +18,12 @@ const Header = styled.div`
   height: 150px;
   justify-content: center;
   align-items: center;
-  background-color: green;
+  background-color: white;
+  border-radius: 3px;
+  border-color: black;
+  border-style: solid;
+  border-width: 3px;
+  margin: 4px;
 `;
 
 export default HeaderSection;
