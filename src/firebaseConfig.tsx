@@ -1,6 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getFirestore, updateDoc } from "firebase/firestore/lite";
+import { deleteDoc, getFirestore, updateDoc } from "firebase/firestore/lite";
 import {
   getDoc,
   doc,
@@ -109,4 +109,8 @@ export async function deleteReservationElder(
   await updateDoc(doc(db, "reservations", id), {
     datas: currentReservations,
   });
+}
+
+export async function deleteMachine(id: string) {
+  await deleteDoc(doc(db, "reservations", id));
 }

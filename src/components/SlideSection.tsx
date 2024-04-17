@@ -1,6 +1,7 @@
 import {
   addMachine,
   addReservationElder,
+  deleteMachine,
   deleteReservationElder,
   getElders,
   getReservations,
@@ -48,6 +49,13 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
   async function createMachine() {
     await addMachine();
 
+    const reservations = await getReservations();
+    await setItems(reservations);
+    await console.log(reservations);
+  }
+
+  async function deleteMachineAndFetch(machineId: any) {
+    await deleteMachine(machineId);
     const reservations = await getReservations();
     await setItems(reservations);
     await console.log(reservations);
@@ -268,11 +276,16 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
         {items.map((index: any, machineIdx: any) => {
           return (
             <Item key={index}>
-              <Countdown
-                currentMachineIdx={machineIdx}
-                currentReservations={index.reservations}
-                handleAddToQueue={handleAddToQueue}
-              />
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <Countdown
+                  currentMachineIdx={machineIdx}
+                  currentReservations={index.reservations}
+                  handleAddToQueue={handleAddToQueue}
+                />
+                <button onClick={() => deleteMachineAndFetch(index.id)}>
+                  삭제
+                </button>
+              </div>
 
               {index.reservations.map(
                 (reservation: string, reservationIdx: any) => {

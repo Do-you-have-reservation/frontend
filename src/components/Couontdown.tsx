@@ -5,7 +5,7 @@ const STATUS = {
   STOPPED: "Stopped",
 };
 // const INITIAL_COUNT = 60 * 15;
-const INITIAL_COUNT = 5;
+const INITIAL_COUNT = 30;
 
 //바꿔보자 stopCount = 0에서 올려가는 방법으로
 
