@@ -17,7 +17,11 @@ async function populateVoiceList(synth: SpeechSynthesis) {
   }
 }
 
-export async function speak(textToRead: string, synth: SpeechSynthesis) {
+export async function speak(
+  textToRead: string,
+  synth: SpeechSynthesis,
+  setIsSpeaking: (isSpeaking: boolean) => void
+) {
   if (speechSynthesis.onvoiceschanged !== undefined) {
     speechSynthesis.onvoiceschanged = () => populateVoiceList;
   }
@@ -28,7 +32,14 @@ export async function speak(textToRead: string, synth: SpeechSynthesis) {
   }
   if (textToRead !== "") {
     const utterThis = new SpeechSynthesisUtterance(textToRead);
-    utterThis.onend = function (event) {};
+    utterThis.onend = function (event) {
+      console.log("speaking end");
+      setIsSpeaking(false);
+    };
+    utterThis.onstart = function (event) {
+      console.log("speaking start");
+    };
+
     utterThis.onerror = function (event) {
       console.error("SpeechSynthesisUtterance.onerror");
     };

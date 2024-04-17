@@ -93,3 +93,20 @@ export async function updateReservationElder(
     datas: currentReservations,
   });
 }
+
+export async function deleteReservationElder(
+  id: string,
+  name: string,
+  reservationIdx: number,
+  currentReservations: any
+) {
+  console.log(id);
+  console.log(currentReservations);
+  console.log(name);
+
+  currentReservations.splice(reservationIdx, 1);
+
+  await updateDoc(doc(db, "reservations", id), {
+    datas: currentReservations,
+  });
+}

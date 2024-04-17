@@ -1,6 +1,7 @@
 import {
   addMachine,
   addReservationElder,
+  deleteReservationElder,
   getElders,
   getReservations,
   updateReservationElder,
@@ -8,10 +9,11 @@ import {
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Countdown from "./Couontdown";
+
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Props } from "../interfaces/Queue.interface";
+import { Countdown } from "./Couontdown";
 
 const ScrollArea = styled.div`
   display: flex;
@@ -35,7 +37,7 @@ interface currentElderInfo {
   currentReservations: any;
 }
 
-const SlideSection = (props: any, { handleAddToQueue }: Props) => {
+const SlideSection = ({ handleAddToQueue }: Props) => {
   const [items, setItems] = useState<any>([]);
   const [addModalShow, setAddModalShow] = React.useState(false);
   const [updateModalShow, setUpdateModalShow] = React.useState(false);
@@ -97,6 +99,19 @@ const SlideSection = (props: any, { handleAddToQueue }: Props) => {
       updateCurrentElderInfo.currentReservations
     );
     setUpdateModalShow(false);
+  }
+
+  async function deleteCurrentElderInfo(
+    updateCurrentElderInfo: currentElderInfo,
+    currentName: string
+  ) {
+    await deleteReservationElder(
+      updateCurrentElderInfo.machineId,
+      currentName,
+      updateCurrentElderInfo.reservationIdx,
+      updateCurrentElderInfo.currentReservations
+    );
+    setItems(await getReservations());
   }
 
   function UpdateVerticallyCenteredModal(props: any) {
@@ -189,27 +204,50 @@ const SlideSection = (props: any, { handleAddToQueue }: Props) => {
 
   const Reservations = (props: any) => {
     return (
-      <button
+      <div
         style={{
-          width: "100%",
-          height: "140px",
-          backgroundColor: "skyblue",
-          marginTop: "5px",
           display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
+          flexDirection: "row",
         }}
-        onClick={() =>
-          createUpdateElderModal({
-            machineId: props.machineId,
-            machineIdx: props.machineIdx,
-            reservationIdx: props.reservationIdx,
-            currentReservations: props.currentReservations,
-          })
-        }
       >
-        {props.name}
-      </button>
+        <button
+          style={{
+            width: "100%",
+            height: "140px",
+            backgroundColor: "skyblue",
+            marginTop: "5px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onClick={() =>
+            createUpdateElderModal({
+              machineId: props.machineId,
+              machineIdx: props.machineIdx,
+              reservationIdx: props.reservationIdx,
+              currentReservations: props.currentReservations,
+            })
+          }
+        >
+          {props.name}
+        </button>
+        <button
+          style={{ background: "skyblue", marginTop: "5px" }}
+          onClick={() =>
+            deleteCurrentElderInfo(
+              {
+                machineId: props.machineId,
+                machineIdx: props.machineIdx,
+                reservationIdx: props.reservationIdx,
+                currentReservations: props.currentReservations,
+              },
+              props.name
+            )
+          }
+        >
+          삭제
+        </button>
+      </div>
     );
   };
 
@@ -231,6 +269,7 @@ const SlideSection = (props: any, { handleAddToQueue }: Props) => {
           return (
             <Item key={index}>
               <Countdown
+                currentMachineIdx={machineIdx}
                 currentReservations={index.reservations}
                 handleAddToQueue={handleAddToQueue}
               />

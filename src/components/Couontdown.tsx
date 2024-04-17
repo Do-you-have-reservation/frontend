@@ -1,6 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import { speak } from "../utils/tts";
-import { Props } from "../interfaces/Queue.interface";
 
 const STATUS = {
   STARTED: "Started",
@@ -11,7 +9,7 @@ const INITIAL_COUNT = 5;
 
 //바꿔보자 stopCount = 0에서 올려가는 방법으로
 
-export default function Countdown(props: any, { handleAddToQueue }: Props) {
+export const Countdown = (props: any) => {
   const [secondsRemaining, setSecondsRemaining] = useState(INITIAL_COUNT);
   const [status, setStatus] = useState(STATUS.STOPPED);
   const [stopCount, setStopCount] = useState(0);
@@ -51,9 +49,13 @@ export default function Countdown(props: any, { handleAddToQueue }: Props) {
     console.log(secondsRemaining);
   }
 
-  const handleStart = () => {
+  const handleStart = (val: number) => {
+    props.handleAddToQueue(
+      props.currentReservations[stopCount + val] +
+        `님 마사지를 시작합니다. ${props.currentMachineIdx + 1}번 마사지기에 착석해주십시오.`
+    );
+
     setStatus(STATUS.STARTED);
-    console.log(props.currentReservations);
   };
 
   const handleStop = () => {
@@ -73,22 +75,24 @@ export default function Countdown(props: any, { handleAddToQueue }: Props) {
         await setSecondsRemaining(INITIAL_COUNT);
         await setStopCount((stopCount: any) => stopCount + 1);
 
+        await props.handleAddToQueue(
+          props.currentReservations[stopCount] + "님 마사지가 종료되었습니다."
+        );
+
         if (stopCount + 1 < props.currentReservations.length) {
-          await console.log("다시 반복합니다.");
-          await handleStart();
+          await handleStart(1);
         }
         if (stopCount + 1 === props.currentReservations.length) {
           setStopCount(0);
-          await console.log("reservation이 모두 종료 되었습니다.");
         }
       }
     },
     status === STATUS.STARTED ? 1000 : null
-    // passing null stops the interval
   );
+
   return (
     <div className="App">
-      <button onClick={handleStart} type="button">
+      <button onClick={() => handleStart(0)} type="button">
         Start
       </button>
       <button onClick={handleStop} type="button">
@@ -117,7 +121,7 @@ export default function Countdown(props: any, { handleAddToQueue }: Props) {
       <div>Status: {status}</div>
     </div>
   );
-}
+};
 
 // source: https://overreacted.io/making-setinterval-declarative-with-react-hooks/
 function useInterval(callback: any, delay: any) {

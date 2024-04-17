@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import { IoIosAddCircle } from "react-icons/io";
 import AddElderModal from "./components/AddElderModal";
 import { speak } from "./utils/tts";
+import { Props } from "./interfaces/Queue.interface";
 
 const MassageChairReservationSystem: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
@@ -19,21 +20,20 @@ const MassageChairReservationSystem: React.FC = () => {
 
   useEffect(() => {
     if (!isSpeaking && queue.length > 0) {
-      // 큐가 비어있지 않고, 현재 말하는 중이 아니라면
-      speakAndSetQueue(queue[0]); // 큐의 첫 번째 요소로 TTS 시작
+      setIsSpeaking(true);
+      speakAndSetQueue(queue[0]);
     }
-  }, [queue, isSpeaking]); // queue 또는 isSpeaking이 변경될 때마다 실행
+  }, [queue, isSpeaking]);
 
   const speakAndSetQueue = async (text: string) => {
-    await setIsSpeaking(true);
-    await speak(text, window.speechSynthesis);
-    await setIsSpeaking(false); // 말하기 종료 후, 상태 변경
+    await speak(text, window.speechSynthesis, setIsSpeaking);
     await setQueue((queue: any) => queue.slice(1)); // 큐에서 현재 요소 제거
+    await new Promise((resolve) => setTimeout(resolve, 3000));
   };
 
-  const handleAddToQueue = (text: string) => {
+  function handleAddToQueue(text: string) {
     setQueue((queue: any) => [...queue, text]); // 새로운 요소를 큐에 추가
-  };
+  }
 
   return (
     <div>
