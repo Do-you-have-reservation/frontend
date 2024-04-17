@@ -197,7 +197,7 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
                   style={{
                     width: "100%",
                     height: "200px",
-                    backgroundColor: "skyblue",
+                    backgroundColor: "#ebd2a4",
                     marginTop: "5px",
                   }}
                   onClick={() =>
@@ -211,7 +211,9 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={props.onHide}>Close</Button>
+          <Button style={{ background: "orange" }} onClick={props.onHide}>
+            Close
+          </Button>
         </Modal.Footer>
       </Modal>
     );
