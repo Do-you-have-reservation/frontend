@@ -158,7 +158,7 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
                     updateCurrentElderInfo(props.currentElderInfo, elder.name)
                   }
                 >
-                  {elder.name}
+                  <text style={{ color: "white" }}> {elder.name} </text>
                 </button>
               );
             })}
@@ -204,7 +204,7 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
                     addCurrentElderInfo(props.currentElderInfo, elder.name)
                   }
                 >
-                  {elder.name}
+                  <text style={{ color: "white" }}> {elder.name} </text>
                 </button>
               );
             })}
