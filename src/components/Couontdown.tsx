@@ -109,13 +109,13 @@ export const Countdown = (props: any) => {
         >
           정지
         </Button>
-        <Button
+        {/* <Button
           style={{ margin: "5px", background: "orange" }}
           onClick={handleReset}
           type="button"
         >
           리셋
-        </Button>
+        </Button> */}
       </BorderdDiv>
 
       <BorderdDiv style={{ flexDirection: "row", display: "flex" }}>
