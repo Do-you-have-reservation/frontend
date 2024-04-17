@@ -151,7 +151,7 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
                   style={{
                     width: "100%",
                     height: "200px",
-                    backgroundColor: "skyblue",
+                    backgroundColor: "#ebd2a4",
                     marginTop: "5px",
                   }}
                   onClick={() =>
@@ -165,7 +165,9 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button onClick={props.onHide}>Close</Button>
+          <Button style={{ background: "orange" }} onClick={props.onHide}>
+            Close
+          </Button>
         </Modal.Footer>
       </Modal>
     );
@@ -242,7 +244,7 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
             })
           }
         >
-          {props.name}
+          <text style={{ color: "white" }}> {props.name}</text>
         </button>
         <button
           style={{ background: "orange", marginTop: "5px" }}
@@ -258,7 +260,7 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
             )
           }
         >
-          삭제
+          <text style={{ color: "white" }}>삭제</text>
         </button>
       </div>
     );
@@ -291,7 +293,7 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
                   style={{ background: "orange", width: "30px" }}
                   onClick={() => deleteMachineAndFetch(index.id)}
                 >
-                  삭제
+                  <text style={{ color: "white" }}>삭제</text>
                 </button>
               </BorderdDiv>
 
@@ -327,18 +329,18 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
                     })
                   }
                 >
-                  추가하기
+                  <text style={{ color: "white" }}>추가하기</text>
                 </button>
               </BorderdDiv>
             </Item>
           );
         })}
-        <Item style={{ backgroundColor: "##ebd2a4" }}>
+        <Item style={{ backgroundColor: "#ebd2a4" }}>
           <button
             onClick={() => createMachine()}
             style={{ width: "100%", height: "100%" }}
           >
-            안마기 추가
+            <text style={{ color: "white" }}>안마기 추가</text>
           </button>
         </Item>
       </ScrollArea>

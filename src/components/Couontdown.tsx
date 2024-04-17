@@ -96,16 +96,24 @@ export const Countdown = (props: any) => {
     <div className="App">
       <BorderdDiv style={{ display: "flex", justifyContent: "center" }}>
         <Button
-          style={{ margin: "5px" }}
+          style={{ margin: "5px", background: "orange" }}
           onClick={() => handleStart(0)}
           type="button"
         >
           시작
         </Button>
-        <Button style={{ margin: "5px" }} onClick={handleStop} type="button">
+        <Button
+          style={{ margin: "5px", background: "orange" }}
+          onClick={handleStop}
+          type="button"
+        >
           정지
         </Button>
-        <Button style={{ margin: "5px" }} onClick={handleReset} type="button">
+        <Button
+          style={{ margin: "5px", background: "orange" }}
+          onClick={handleReset}
+          type="button"
+        >
           리셋
         </Button>
       </BorderdDiv>
