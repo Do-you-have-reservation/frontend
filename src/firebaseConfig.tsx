@@ -134,6 +134,12 @@ export async function deleteReservationElder(
   });
 }
 
+export async function deleteElder(elderId: string) {
+  console.log(elderId);
+
+  await deleteDoc(doc(db, "elders", elderId));
+}
+
 export async function deleteMachine(id: string) {
   await deleteDoc(doc(db, "reservations", id));
 }

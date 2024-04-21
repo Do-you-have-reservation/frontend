@@ -1,6 +1,7 @@
 import {
   addMachine,
   addReservationElder,
+  deleteElder,
   deleteMachine,
   deleteReservationElder,
   getElders,
@@ -49,6 +50,11 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
   const [updateModalShow, setUpdateModalShow] = React.useState(false);
   const [elders, setElders] = useState<any>([]);
   const [currentElderInfo, setCurrentElderInfo] = useState<currentElderInfo>();
+
+  async function deleteSelectedElder(elderId: string) {
+    await deleteElder(elderId);
+    setElders(await getElders());
+  }
 
   async function createAddElderModal(props: any) {
     setElders(await getElders());
@@ -125,19 +131,36 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
           >
             {props.elders.map((elder: any) => {
               return (
-                <button
+                <div
                   style={{
-                    width: "100%",
-                    height: "200px",
-                    backgroundColor: "#ebd2a4",
-                    marginTop: "5px",
+                    display: "flex",
+                    flexDirection: "row",
                   }}
-                  onClick={() =>
-                    updateCurrentElderInfo(props.currentElderInfo, elder.name)
-                  }
                 >
-                  <text style={{ color: "white" }}> {elder.name} </text>
-                </button>
+                  <button
+                    style={{
+                      width: "100%",
+                      height: "200px",
+                      backgroundColor: "#ebd2a4",
+                      marginTop: "5px",
+                    }}
+                    onClick={() =>
+                      updateCurrentElderInfo(props.currentElderInfo, elder.name)
+                    }
+                  >
+                    <text style={{ color: "white" }}> {elder.name} </text>
+                  </button>
+                  <button
+                    style={{
+                      height: "200px",
+                      backgroundColor: "orange",
+                      marginTop: "5px",
+                    }}
+                    onClick={() => deleteSelectedElder(elder.id)}
+                  >
+                    <text style={{ color: "white" }}> 삭제</text>
+                  </button>
+                </div>
               );
             })}
           </div>
@@ -171,19 +194,31 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
           >
             {props.elders.map((elder: any) => {
               return (
-                <button
-                  style={{
-                    width: "100%",
-                    height: "200px",
-                    backgroundColor: "#ebd2a4",
-                    marginTop: "5px",
-                  }}
-                  onClick={() =>
-                    addCurrentElderInfo(props.currentElderInfo, elder.name)
-                  }
-                >
-                  <text style={{ color: "white" }}> {elder.name} </text>
-                </button>
+                <div style={{ display: "flex", flexDirection: "row" }}>
+                  <button
+                    style={{
+                      width: "100%",
+                      height: "200px",
+                      backgroundColor: "#ebd2a4",
+                      marginTop: "5px",
+                    }}
+                    onClick={() =>
+                      addCurrentElderInfo(props.currentElderInfo, elder.name)
+                    }
+                  >
+                    <text style={{ color: "white" }}> {elder.name} </text>
+                  </button>
+                  <button
+                    style={{
+                      height: "200px",
+                      backgroundColor: "orange",
+                      marginTop: "5px",
+                    }}
+                    onClick={() => deleteSelectedElder(elder.id)}
+                  >
+                    <text style={{ color: "white" }}> 삭제</text>
+                  </button>
+                </div>
               );
             })}
           </div>
