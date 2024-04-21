@@ -47,24 +47,8 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
   const [items, setItems] = useState<any>([]);
   const [addModalShow, setAddModalShow] = React.useState(false);
   const [updateModalShow, setUpdateModalShow] = React.useState(false);
-
   const [elders, setElders] = useState<any>([]);
   const [currentElderInfo, setCurrentElderInfo] = useState<currentElderInfo>();
-
-  async function createMachine() {
-    await addMachine();
-
-    const reservations = await getReservations();
-    await setItems(reservations);
-    await console.log(reservations);
-  }
-
-  async function deleteMachineAndFetch(machineId: any) {
-    await deleteMachine(machineId);
-    const reservations = await getReservations();
-    await setItems(reservations);
-    await console.log(reservations);
-  }
 
   async function createAddElderModal(props: any) {
     setElders(await getElders());
@@ -87,6 +71,20 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
       reservationIdx: props.reservationIdx,
     });
     await setUpdateModalShow(true);
+  }
+  async function createMachine() {
+    await addMachine();
+
+    const reservations = await getReservations();
+    await setItems(reservations);
+    await console.log(reservations);
+  }
+
+  async function deleteMachineAndFetch(machineId: any) {
+    await deleteMachine(machineId);
+    const reservations = await getReservations();
+    await setItems(reservations);
+    await console.log(reservations);
   }
 
   async function addCurrentElderInfo(
@@ -112,19 +110,6 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
       updateCurrentElderInfo.currentReservations
     );
     setUpdateModalShow(false);
-  }
-
-  async function deleteCurrentElderInfo(
-    updateCurrentElderInfo: currentElderInfo,
-    currentName: string
-  ) {
-    await deleteReservationElder(
-      updateCurrentElderInfo.machineId,
-      currentName,
-      updateCurrentElderInfo.reservationIdx,
-      updateCurrentElderInfo.currentReservations
-    );
-    setItems(await getReservations());
   }
 
   function UpdateVerticallyCenteredModal(props: any) {
@@ -219,55 +204,6 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
     );
   }
 
-  const Reservations = (props: any) => {
-    return (
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-        }}
-      >
-        <button
-          style={{
-            width: "100%",
-            height: "140px",
-            backgroundColor: "#ebd2a4",
-            marginTop: "5px",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-          onClick={() =>
-            createUpdateElderModal({
-              machineId: props.machineId,
-              machineIdx: props.machineIdx,
-              reservationIdx: props.reservationIdx,
-              currentReservations: props.currentReservations,
-            })
-          }
-        >
-          <text style={{ color: "white" }}> {props.name}</text>
-        </button>
-        <button
-          style={{ background: "orange", marginTop: "5px" }}
-          onClick={() =>
-            deleteCurrentElderInfo(
-              {
-                machineId: props.machineId,
-                machineIdx: props.machineIdx,
-                reservationIdx: props.reservationIdx,
-                currentReservations: props.currentReservations,
-              },
-              props.name
-            )
-          }
-        >
-          <text style={{ color: "white" }}>삭제</text>
-        </button>
-      </div>
-    );
-  };
-
   useEffect(() => {
     async function createItems() {
       const reservations = await getReservations();
@@ -291,6 +227,11 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
                   currentReservations={index.reservations}
                   currentMachineId={index.id}
                   handleAddToQueue={handleAddToQueue}
+                  addModalShow={addModalShow}
+                  setAddModalShow={setAddModalShow}
+                  updateModalShow={updateModalShow}
+                  setUpdateModalShow={setUpdateModalShow}
+                  createUpdateElderModal={createUpdateElderModal}
                 />
                 <button
                   style={{ background: "orange", width: "30px" }}
@@ -299,42 +240,25 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
                   <text style={{ color: "white" }}>삭제</text>
                 </button>
               </BorderdDiv>
-
-              <BorderdDiv>
-                {" "}
-                {index.reservations.map(
-                  (reservation: string, reservationIdx: any) => {
-                    return (
-                      <Reservations
-                        machineId={index.id}
-                        machineIdx={machineIdx}
-                        reservationIdx={reservationIdx}
-                        currentReservations={index.reservations}
-                        name={reservation}
-                      ></Reservations>
-                    );
-                  }
-                )}
-                <button
-                  style={{
-                    width: "100%",
-                    height: "140px",
-                    backgroundColor: "orange",
-                    marginTop: "5px",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                  onClick={() =>
-                    createAddElderModal({
-                      machineId: index.id,
-                      currentReservations: index.reservations,
-                    })
-                  }
-                >
-                  <text style={{ color: "white" }}>추가하기</text>
-                </button>
-              </BorderdDiv>
+              <button
+                style={{
+                  width: "100%",
+                  height: "140px",
+                  backgroundColor: "orange",
+                  marginTop: "5px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                onClick={() =>
+                  createAddElderModal({
+                    machineId: index.id,
+                    currentReservations: index.reservations,
+                  })
+                }
+              >
+                <text style={{ color: "white" }}>추가하기</text>
+              </button>
             </Item>
           );
         })}

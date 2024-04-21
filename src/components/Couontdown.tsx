@@ -1,7 +1,15 @@
 import React, { useState, useEffect, useRef } from "react";
 import Button from "react-bootstrap/esm/Button";
 import { styled } from "styled-components";
-import { deleteFirstReservationElder } from "../firebaseConfig";
+import {
+  addReservationElder,
+  deleteFirstReservationElder,
+  deleteReservationElder,
+  getElders,
+  getReservations,
+  updateReservationElder,
+} from "../firebaseConfig";
+import Modal from "react-bootstrap/Modal";
 
 const STATUS = {
   STARTED: "진행",
@@ -11,16 +19,154 @@ const STATUS = {
 const INITIAL_COUNT = 60 * 15;
 
 //바꿔보자 stopCount = 0에서 올려가는 방법으로
-
+interface currentElderInfo {
+  machineId: string;
+  machineIdx: number;
+  reservationIdx: number;
+  currentReservations: any;
+}
 export const Countdown = (props: any) => {
   const [secondsRemaining, setSecondsRemaining] = useState(INITIAL_COUNT);
   const [status, setStatus] = useState(STATUS.STOPPED);
-  const [stopCount, setStopCount] = useState(0);
+  const [elders, setElders] = useState<any>([]);
+  const [currentElderInfo, setCurrentElderInfo] = useState<currentElderInfo>();
+  const [addModalShow, setAddModalShow] = React.useState(false);
+  const [updateModalShow, setUpdateModalShow] = React.useState(false);
+  const [items, setItems] = useState<any>([]);
+  async function addCurrentElderInfo(
+    currentElderInfo: currentElderInfo,
+    currentName: string
+  ) {
+    await addReservationElder(
+      currentElderInfo.machineId,
+      currentName,
+      currentElderInfo.currentReservations
+    );
+    setAddModalShow(false);
+  }
 
+  async function updateCurrentElderInfo(
+    updateCurrentElderInfo: currentElderInfo,
+    currentName: string
+  ) {
+    await updateReservationElder(
+      updateCurrentElderInfo.machineId,
+      currentName,
+      updateCurrentElderInfo.reservationIdx,
+      updateCurrentElderInfo.currentReservations
+    );
+    setUpdateModalShow(false);
+  }
   const secondsToDisplay = secondsRemaining % 60;
   const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
   const minutesToDisplay = minutesRemaining % 60;
   const hoursToDisplay = (minutesRemaining - minutesToDisplay) / 60;
+
+  async function deleteCurrentElderInfo(
+    updateCurrentElderInfo: currentElderInfo,
+    currentName: string
+  ) {
+    await deleteReservationElder(
+      updateCurrentElderInfo.machineId,
+      currentName,
+      updateCurrentElderInfo.reservationIdx,
+      updateCurrentElderInfo.currentReservations
+    );
+    setItems(await getReservations());
+  }
+  const Reservations = (props: any) => {
+    return status === STATUS.STARTED && props.reservationIdx === 0 ? (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <button
+          style={{
+            width: "100%",
+            height: "140px",
+            backgroundColor: "#2fdf49",
+            marginTop: "5px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onClick={() =>
+            props.createUpdateElderModal({
+              machineId: props.machineId,
+              machineIdx: props.machineIdx,
+              reservationIdx: props.reservationIdx,
+              currentReservations: props.currentReservations,
+            })
+          }
+        >
+          <text style={{ color: "white" }}> {props.name}</text>
+        </button>
+        <button
+          style={{ background: "#07911c", marginTop: "5px" }}
+          onClick={() =>
+            deleteCurrentElderInfo(
+              {
+                machineId: props.machineId,
+                machineIdx: props.machineIdx,
+                reservationIdx: props.reservationIdx,
+                currentReservations: props.currentReservations,
+              },
+              props.name
+            )
+          }
+        >
+          <text style={{ color: "white" }}>삭제</text>
+        </button>
+      </div>
+    ) : (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <button
+          style={{
+            width: "100%",
+            height: "140px",
+            backgroundColor: "#ebd2a4",
+            marginTop: "5px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+          onClick={() =>
+            props.createUpdateElderModal({
+              machineId: props.machineId,
+              machineIdx: props.machineIdx,
+              reservationIdx: props.reservationIdx,
+              currentReservations: props.currentReservations,
+            })
+          }
+        >
+          <text style={{ color: "white" }}> {props.name}</text>
+        </button>
+        <button
+          style={{ background: "orange", marginTop: "5px" }}
+          onClick={() =>
+            deleteCurrentElderInfo(
+              {
+                machineId: props.machineId,
+                machineIdx: props.machineIdx,
+                reservationIdx: props.reservationIdx,
+                currentReservations: props.currentReservations,
+              },
+              props.name
+            )
+          }
+        >
+          <text style={{ color: "white" }}>삭제</text>
+        </button>
+      </div>
+    );
+  };
 
   function countUp360() {
     setSecondsRemaining(secondsRemaining + 3600);
@@ -80,7 +226,7 @@ export const Countdown = (props: any) => {
         await setSecondsRemaining(INITIAL_COUNT);
 
         await props.handleAddToQueue(
-          props.currentReservations[stopCount] + "님 마사지가 종료되었습니다."
+          props.currentReservations[0] + "님 마사지가 종료되었습니다."
         );
 
         await deleteFirstReservationElder(
@@ -156,6 +302,23 @@ export const Countdown = (props: any) => {
       <BorderdDiv style={{ display: "flex", justifyContent: "center" }}>
         상태 : {status}
       </BorderdDiv>
+
+      <BorderdDiv>
+        {props.currentReservations.map(
+          (reservation: string, reservationIdx: any) => {
+            return (
+              <Reservations
+                machineId={props.currentMachineId}
+                machineIdx={props.currentMachineIdx}
+                reservationIdx={reservationIdx}
+                currentReservations={props.currentReservations}
+                name={reservation}
+                createUpdateElderModal={props.createUpdateElderModal}
+              ></Reservations>
+            );
+          }
+        )}
+      </BorderdDiv>
     </div>
   );
 };
@@ -184,14 +347,6 @@ function useInterval(callback: any, delay: any) {
 // https://stackoverflow.com/a/2998874/1673761
 const twoDigits = (num: any) => String(num).padStart(2, "0");
 const BorderdDiv = styled.div`
-  margin: 4px;
-  border-radius: 3px;
-  border-color: black;
-  border-style: solid;
-  border-width: 3px;
-`;
-
-const Dashboard = styled.div`
   margin: 4px;
   border-radius: 3px;
   border-color: black;
