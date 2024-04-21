@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import Button from "react-bootstrap/esm/Button";
 import { styled } from "styled-components";
+import { Display } from "react-7-segment-display";
+
 import {
   addReservationElder,
   deleteFirstReservationElder,
@@ -284,10 +286,13 @@ export const Countdown = (props: any) => {
         <div style={{ flexDirection: "column", display: "flex" }}>
           <button onClick={countUp360}>up</button>
           <BorderdDiv>
-            <input
-              style={{ textAlign: "center" }}
+            <Display
               value={twoDigits(hoursToDisplay)}
-            ></input>
+              color="blue"
+              count={2}
+              height={100}
+              skew={false}
+            ></Display>
           </BorderdDiv>
 
           <button onClick={countDown360}>down</button>
@@ -295,10 +300,13 @@ export const Countdown = (props: any) => {
         <div style={{ flexDirection: "column", display: "flex" }}>
           <button onClick={countUp60}>up</button>
           <BorderdDiv>
-            <input
-              style={{ textAlign: "center" }}
+            <Display
               value={twoDigits(minutesToDisplay)}
-            ></input>
+              color="blue"
+              count={2}
+              height={100}
+              skew={false}
+            ></Display>
           </BorderdDiv>
 
           <button onClick={countDown60}>down</button>
@@ -306,10 +314,13 @@ export const Countdown = (props: any) => {
         <div style={{ flexDirection: "column", display: "flex" }}>
           <button onClick={countUp1}>up</button>
           <BorderdDiv>
-            <input
-              style={{ textAlign: "center" }}
+            <Display
               value={twoDigits(secondsToDisplay)}
-            ></input>
+              color="blue"
+              count={2}
+              height={100}
+              skew={false}
+            ></Display>
           </BorderdDiv>
 
           <button onClick={countDown1}>down</button>
