@@ -293,7 +293,7 @@ export const Countdown = (props: any) => {
             >
               <Display
                 value={twoDigits(hoursToDisplay)}
-                color="blue"
+                color="#ff5e23"
                 count={2}
                 height={100}
                 skew={false}
@@ -313,7 +313,7 @@ export const Countdown = (props: any) => {
             >
               <Display
                 value={twoDigits(minutesToDisplay)}
-                color="blue"
+                color="#ff5e23"
                 count={2}
                 height={100}
                 skew={false}
@@ -333,7 +333,7 @@ export const Countdown = (props: any) => {
             >
               <Display
                 value={twoDigits(secondsToDisplay)}
-                color="blue"
+                color="#ff5e23"
                 count={2}
                 height={100}
                 skew={false}
