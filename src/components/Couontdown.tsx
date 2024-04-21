@@ -286,13 +286,19 @@ export const Countdown = (props: any) => {
         <div style={{ flexDirection: "column", display: "flex" }}>
           <button onClick={countUp360}>up</button>
           <BorderdDiv>
-            <Display
-              value={twoDigits(hoursToDisplay)}
-              color="blue"
-              count={2}
-              height={100}
-              skew={false}
-            ></Display>
+            <div
+              style={{
+                position: "relative",
+              }}
+            >
+              <Display
+                value={twoDigits(hoursToDisplay)}
+                color="blue"
+                count={2}
+                height={100}
+                skew={false}
+              ></Display>
+            </div>
           </BorderdDiv>
 
           <button onClick={countDown360}>down</button>
@@ -300,13 +306,19 @@ export const Countdown = (props: any) => {
         <div style={{ flexDirection: "column", display: "flex" }}>
           <button onClick={countUp60}>up</button>
           <BorderdDiv>
-            <Display
-              value={twoDigits(minutesToDisplay)}
-              color="blue"
-              count={2}
-              height={100}
-              skew={false}
-            ></Display>
+            <div
+              style={{
+                position: "relative",
+              }}
+            >
+              <Display
+                value={twoDigits(minutesToDisplay)}
+                color="blue"
+                count={2}
+                height={100}
+                skew={false}
+              ></Display>
+            </div>
           </BorderdDiv>
 
           <button onClick={countDown60}>down</button>
@@ -314,13 +326,19 @@ export const Countdown = (props: any) => {
         <div style={{ flexDirection: "column", display: "flex" }}>
           <button onClick={countUp1}>up</button>
           <BorderdDiv>
-            <Display
-              value={twoDigits(secondsToDisplay)}
-              color="blue"
-              count={2}
-              height={100}
-              skew={false}
-            ></Display>
+            <div
+              style={{
+                position: "relative",
+              }}
+            >
+              <Display
+                value={twoDigits(secondsToDisplay)}
+                color="blue"
+                count={2}
+                height={100}
+                skew={false}
+              ></Display>
+            </div>
           </BorderdDiv>
 
           <button onClick={countDown1}>down</button>
