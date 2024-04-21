@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef } from "react";
 import Button from "react-bootstrap/esm/Button";
 import { styled } from "styled-components";
 import { Display } from "react-7-segment-display";
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import {
   addReservationElder,
   deleteFirstReservationElder,
@@ -14,6 +15,7 @@ import {
 } from "../firebaseConfig";
 import Modal from "react-bootstrap/Modal";
 import { koreanNumbers } from "../utils/koreanNumbers";
+import { IoIosNutrition } from "react-icons/io";
 
 const STATUS = {
   STARTED: "진행",
@@ -38,11 +40,16 @@ export const Countdown = (props: any) => {
   const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
   const minutesToDisplay = minutesRemaining % 60;
   const hoursToDisplay = (minutesRemaining - minutesToDisplay) / 60;
+  const notify = () =>
+    toast("진행 중인 마사지들이 모두 끝난 후 기계를 삭제할 수 있습니다.");
 
   async function deleteCurrentElderInfo(
     updateCurrentElderInfo: currentElderInfo,
     currentName: string
   ) {
+    await setStatus(STATUS.STOPPED);
+    await setSecondsRemaining(INITIAL_COUNT);
+
     await deleteReservationElder(
       updateCurrentElderInfo.machineId,
       currentName,
@@ -183,10 +190,18 @@ export const Countdown = (props: any) => {
     );
   };
   async function deleteMachineAndFetch(machineId: any) {
-    await deleteMachine(machineId);
-    const reservations = await getReservations();
-    await props.setItems(reservations);
-    await console.log(reservations);
+    if (status === STATUS.STOPPED) {
+      await setStatus(STATUS.STOPPED);
+      await setSecondsRemaining(INITIAL_COUNT);
+      await deleteMachine(machineId);
+      const reservations = await getReservations();
+      await props.setItems(reservations);
+      await console.log(reservations);
+    }
+
+    if(status === STATUS.STARTED){
+      notify();
+    }
   }
   function countUp360() {
     setSecondsRemaining(secondsRemaining + 3600);
@@ -248,7 +263,6 @@ export const Countdown = (props: any) => {
       } else {
         await setStatus(STATUS.STOPPED);
         await setSecondsRemaining(INITIAL_COUNT);
-
         await props.handleAddToQueue(
           props.currentReservations[0] + "님 마사지가 종료되었습니다."
         );

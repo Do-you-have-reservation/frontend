@@ -8,6 +8,7 @@ import { IoIosAddCircle } from "react-icons/io";
 import AddElderModal from "./components/AddElderModal";
 import { speak } from "./utils/tts";
 import { Props } from "./interfaces/Queue.interface";
+import { ToastContainer } from "react-toastify";
 
 const MassageChairReservationSystem: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
@@ -56,6 +57,7 @@ const MassageChairReservationSystem: React.FC = () => {
         <IoIosAddCircle color="orange" size={150} />
       </Button>
       <AddElderModal show={showModal} handleClose={handleCloseModal} />
+      <ToastContainer />
     </div>
   );
 };

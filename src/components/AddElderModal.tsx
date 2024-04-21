@@ -44,8 +44,12 @@ function AddElderModal({ show, handleClose }: AddElderModalProps) {
           <Button variant="secondary" onClick={handleClose}>
             닫기
           </Button>
-          <Button variant="primary" onClick={() => addElderWithName(name)}>
-            추가
+          <Button
+            style={{ background: "white", borderColor: "#ece6cc" }}
+            variant="primary"
+            onClick={() => addElderWithName(name)}
+          >
+            <text style={{ color: "black" }}>추가</text>
           </Button>
         </Modal.Footer>
       </Modal>
