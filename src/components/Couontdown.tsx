@@ -11,6 +11,7 @@ import {
   updateReservationElder,
 } from "../firebaseConfig";
 import Modal from "react-bootstrap/Modal";
+import { koreanNumbers } from "../utils/koreanNumbers";
 
 const STATUS = {
   STARTED: "진행",
@@ -205,11 +206,15 @@ export const Countdown = (props: any) => {
     if (props.currentReservations.length > 0) {
       props.handleAddToQueue(
         props.currentReservations[0] +
-          `님 마사지를 시작합니다. ${props.currentMachineIdx + 1}번 마사지기에 착석해주십시오.`
+          `님 마사지를 시작합니다. ${convertSpeakNumber(props.currentMachineIdx + 1)}번 마사지기에 착석해주십시오.`
       );
 
       setStatus(STATUS.STARTED);
     }
+  };
+
+  const convertSpeakNumber = (number: number) => {
+    return koreanNumbers[number];
   };
 
   const handleStop = () => {
