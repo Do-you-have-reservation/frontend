@@ -63,14 +63,14 @@ export const Countdown = (props: any) => {
           style={{
             width: "100%",
             height: "500px",
-            backgroundColor: "#ebd2a4",
+            backgroundColor: "white",
 
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
           }}
         >
-          <text style={{ color: "white" }}> 예약 없음</text>
+          <text style={{ color: "black" }}> 예약 없음</text>
         </div>
       </div>
     );
@@ -83,15 +83,17 @@ export const Countdown = (props: any) => {
           flexDirection: "row",
         }}
       >
-        <button
+        <Button
           style={{
             width: "100%",
             height: "140px",
-            backgroundColor: "#2fdf49",
+            backgroundColor: "white",
             marginTop: "5px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            borderColor: "#2fdf49",
+            borderWidth: "4px",
           }}
           onClick={() =>
             props.createUpdateElderModal({
@@ -102,10 +104,14 @@ export const Countdown = (props: any) => {
             })
           }
         >
-          <text style={{ color: "white" }}> {props.name}</text>
-        </button>
-        <button
-          style={{ background: "#07911c", marginTop: "5px" }}
+          <text style={{ color: "black", fontSize: "60px" }}>{props.name}</text>
+        </Button>
+        <Button
+          style={{
+            background: "white",
+            marginTop: "5px",
+            borderColor: "#ece6cc",
+          }}
           onClick={() =>
             deleteCurrentElderInfo(
               {
@@ -118,8 +124,8 @@ export const Countdown = (props: any) => {
             )
           }
         >
-          <text style={{ color: "white" }}>삭제</text>
-        </button>
+          <text style={{ color: "black" }}>삭제</text>
+        </Button>
       </div>
     ) : (
       <div
@@ -128,15 +134,16 @@ export const Countdown = (props: any) => {
           flexDirection: "row",
         }}
       >
-        <button
+        <Button
           style={{
             width: "100%",
             height: "140px",
-            backgroundColor: "#ebd2a4",
+            backgroundColor: "white",
             marginTop: "5px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",
+            borderColor: "#ece6cc",
           }}
           onClick={() =>
             props.createUpdateElderModal({
@@ -147,10 +154,17 @@ export const Countdown = (props: any) => {
             })
           }
         >
-          <text style={{ color: "white" }}> {props.name}</text>
-        </button>
-        <button
-          style={{ background: "orange", marginTop: "5px" }}
+          <text style={{ color: "black", fontSize: "60px" }}>
+            {" "}
+            {props.name}
+          </text>
+        </Button>
+        <Button
+          style={{
+            background: "white",
+            marginTop: "5px",
+            borderColor: "#ece6cc",
+          }}
           onClick={() =>
             deleteCurrentElderInfo(
               {
@@ -163,8 +177,8 @@ export const Countdown = (props: any) => {
             )
           }
         >
-          <text style={{ color: "white" }}>삭제</text>
-        </button>
+          <text style={{ color: "black" }}>삭제</text>
+        </Button>
       </div>
     );
   };
@@ -252,25 +266,25 @@ export const Countdown = (props: any) => {
     <div className="App">
       <BorderdDiv style={{ display: "flex", justifyContent: "center" }}>
         <Button
-          style={{ margin: "5px", background: "orange" }}
+          style={{ margin: "5px", background: "white", borderColor: "#ece6cc" }}
           onClick={() => handleStart()}
           type="button"
         >
-          시작
+          <text style={{ color: "black" }}>시작</text>
         </Button>
         <Button
-          style={{ margin: "5px", background: "orange" }}
+          style={{ margin: "5px", background: "white", borderColor: "#ece6cc" }}
           onClick={handleStop}
           type="button"
         >
-          정지
+          <text style={{ color: "black" }}>정지</text>
         </Button>
         <Button
-          style={{ margin: "5px", background: "orange" }}
+          style={{ margin: "5px", background: "white", borderColor: "#ece6cc" }}
           onClick={() => deleteMachineAndFetch(props.currentMachineId)}
           type="button"
         >
-          삭제
+          <text style={{ color: "black" }}>삭제</text>
         </Button>
 
         {/* <Button
@@ -284,7 +298,12 @@ export const Countdown = (props: any) => {
 
       <BorderdDiv style={{ flexDirection: "row", display: "flex" }}>
         <div style={{ flexDirection: "column", display: "flex" }}>
-          <button onClick={countUp360}>up</button>
+          <Button
+            style={{ background: "white", borderColor: "#ece6cc" }}
+            onClick={countUp360}
+          >
+            <text style={{ color: "black" }}>up</text>
+          </Button>
           <BorderdDiv>
             <div
               style={{
@@ -301,10 +320,20 @@ export const Countdown = (props: any) => {
             </div>
           </BorderdDiv>
 
-          <button onClick={countDown360}>down</button>
+          <Button
+            style={{ background: "white", borderColor: "#ece6cc" }}
+            onClick={countDown360}
+          >
+            <text style={{ color: "black" }}>down</text>
+          </Button>
         </div>
         <div style={{ flexDirection: "column", display: "flex" }}>
-          <button onClick={countUp60}>up</button>
+          <Button
+            style={{ background: "white", borderColor: "#ece6cc" }}
+            onClick={countUp60}
+          >
+            <text style={{ color: "black" }}>up</text>
+          </Button>
           <BorderdDiv>
             <div
               style={{
@@ -321,10 +350,20 @@ export const Countdown = (props: any) => {
             </div>
           </BorderdDiv>
 
-          <button onClick={countDown60}>down</button>
+          <Button
+            style={{ background: "white", borderColor: "#ece6cc" }}
+            onClick={countDown60}
+          >
+            <text style={{ color: "black" }}>down</text>
+          </Button>
         </div>
         <div style={{ flexDirection: "column", display: "flex" }}>
-          <button onClick={countUp1}>up</button>
+          <Button
+            style={{ background: "white", borderColor: "#ece6cc" }}
+            onClick={countUp1}
+          >
+            <text style={{ color: "black" }}>up</text>
+          </Button>
           <BorderdDiv>
             <div
               style={{
@@ -341,11 +380,13 @@ export const Countdown = (props: any) => {
             </div>
           </BorderdDiv>
 
-          <button onClick={countDown1}>down</button>
+          <Button
+            style={{ background: "white", borderColor: "#ece6cc" }}
+            onClick={countDown1}
+          >
+            <text style={{ color: "black" }}>down</text>
+          </Button>
         </div>
-      </BorderdDiv>
-      <BorderdDiv style={{ display: "flex", justifyContent: "center" }}>
-        상태 : {status}
       </BorderdDiv>
 
       <BorderdDiv>
@@ -403,7 +444,7 @@ const twoDigits = (num: any) => String(num).padStart(2, "0");
 const BorderdDiv = styled.div`
   margin: 4px;
   border-radius: 3px;
-  border-color: black;
+  border-color: #ece6cc;
   border-style: solid;
   border-width: 3px;
 `;

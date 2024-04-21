@@ -20,7 +20,7 @@ const Header = styled.div`
   align-items: center;
   background-color: white;
   border-radius: 3px;
-  border-color: black;
+  border-color: #ece6cc;
   border-style: solid;
   border-width: 3px;
   margin: 4px;

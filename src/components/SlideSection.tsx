@@ -16,6 +16,7 @@ import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { Props } from "../interfaces/Queue.interface";
 import { Countdown } from "./Couontdown";
+import { IoIosAddCircle } from "react-icons/io";
 
 const ScrollArea = styled.div`
   display: flex;
@@ -26,7 +27,7 @@ const ScrollArea = styled.div`
   height: 1000px;
   margin: 4px;
   border-radius: 3px;
-  border-color: black;
+  border-color: #ece6cc;
   border-style: solid;
   border-width: 3px;
 `;
@@ -137,37 +138,42 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
                     flexDirection: "row",
                   }}
                 >
-                  <button
+                  <Button
                     style={{
                       width: "100%",
                       height: "200px",
-                      backgroundColor: "#ebd2a4",
+                      backgroundColor: "white",
                       marginTop: "5px",
+                      borderColor: "#ece6cc",
                     }}
                     onClick={() =>
                       updateCurrentElderInfo(props.currentElderInfo, elder.name)
                     }
                   >
-                    <text style={{ color: "white" }}> {elder.name} </text>
-                  </button>
-                  <button
+                    <text style={{ color: "black" }}> {elder.name} </text>
+                  </Button>
+                  <Button
                     style={{
                       height: "200px",
-                      backgroundColor: "orange",
+                      backgroundColor: "white",
                       marginTop: "5px",
+                      borderColor: "#ece6cc",
                     }}
                     onClick={() => deleteSelectedElder(elder.id)}
                   >
-                    <text style={{ color: "white" }}> 삭제</text>
-                  </button>
+                    <text style={{ color: "black" }}> 삭제</text>
+                  </Button>
                 </div>
               );
             })}
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button style={{ background: "orange" }} onClick={props.onHide}>
-            Close
+          <Button
+            style={{ background: "white", borderColor: "#ece6cc" }}
+            onClick={props.onHide}
+          >
+            <text style={{ color: "black" }}> Close </text>
           </Button>
         </Modal.Footer>
       </Modal>
@@ -195,37 +201,43 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
             {props.elders.map((elder: any) => {
               return (
                 <div style={{ display: "flex", flexDirection: "row" }}>
-                  <button
+                  <Button
                     style={{
                       width: "100%",
                       height: "200px",
-                      backgroundColor: "#ebd2a4",
+                      backgroundColor: "white",
+                      borderColor: "#ece6cc",
                       marginTop: "5px",
                     }}
                     onClick={() =>
                       addCurrentElderInfo(props.currentElderInfo, elder.name)
                     }
                   >
-                    <text style={{ color: "white" }}> {elder.name} </text>
-                  </button>
-                  <button
+                    <text style={{ color: "black" }}> {elder.name} </text>
+                  </Button>
+                  <Button
                     style={{
                       height: "200px",
-                      backgroundColor: "orange",
+                      backgroundColor: "white",
+                      borderColor: "#ece6cc",
+
                       marginTop: "5px",
                     }}
                     onClick={() => deleteSelectedElder(elder.id)}
                   >
-                    <text style={{ color: "white" }}> 삭제</text>
-                  </button>
+                    <text style={{ color: "black" }}>삭제</text>
+                  </Button>
                 </div>
               );
             })}
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <Button style={{ background: "orange" }} onClick={props.onHide}>
-            Close
+          <Button
+            style={{ background: "white", borderColor: "#ece6cc" }}
+            onClick={props.onHide}
+          >
+            <text style={{ color: "black" }}>Close</text>
           </Button>
         </Modal.Footer>
       </Modal>
@@ -261,15 +273,16 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
                   setItems={setItems}
                 />
               </BorderdDiv>
-              <button
+              <Button
                 style={{
                   width: "100%",
                   height: "140px",
-                  backgroundColor: "orange",
+                  backgroundColor: "white",
                   marginTop: "5px",
                   display: "flex",
                   justifyContent: "center",
                   alignItems: "center",
+                  borderColor: "#ece6cc",
                 }}
                 onClick={() =>
                   createAddElderModal({
@@ -278,18 +291,26 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
                   })
                 }
               >
-                <text style={{ color: "white" }}>추가하기</text>
-              </button>
+                <text style={{ color: "black" }}>추가하기</text>
+              </Button>
             </Item>
           );
         })}
         <Item style={{ backgroundColor: "#ebd2a4" }}>
-          <button
+          <Button
             onClick={() => createMachine()}
-            style={{ width: "100%", height: "100%" }}
+            style={{
+              width: "100%",
+              height: "100%",
+              background: "white",
+              borderColor: "#ece6cc",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
           >
-            <text style={{ color: "white" }}>안마기 추가</text>
-          </button>
+            <IoIosAddCircle color="#ece6cc" size={150} />
+          </Button>
         </Item>
       </ScrollArea>
       <AddVerticallyCenteredModal
@@ -310,7 +331,7 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
 const BorderdDiv = styled.div`
   margin: 4px;
   border-radius: 3px;
-  border-color: black;
+  border-color: #ece6cc;
   border-style: solid;
   border-width: 3px;
   height: 700px;
