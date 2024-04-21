@@ -4,6 +4,7 @@ import { styled } from "styled-components";
 import {
   addReservationElder,
   deleteFirstReservationElder,
+  deleteMachine,
   deleteReservationElder,
   getElders,
   getReservations,
@@ -28,35 +29,8 @@ interface currentElderInfo {
 export const Countdown = (props: any) => {
   const [secondsRemaining, setSecondsRemaining] = useState(INITIAL_COUNT);
   const [status, setStatus] = useState(STATUS.STOPPED);
-  const [elders, setElders] = useState<any>([]);
-  const [currentElderInfo, setCurrentElderInfo] = useState<currentElderInfo>();
-  const [addModalShow, setAddModalShow] = React.useState(false);
-  const [updateModalShow, setUpdateModalShow] = React.useState(false);
   const [items, setItems] = useState<any>([]);
-  async function addCurrentElderInfo(
-    currentElderInfo: currentElderInfo,
-    currentName: string
-  ) {
-    await addReservationElder(
-      currentElderInfo.machineId,
-      currentName,
-      currentElderInfo.currentReservations
-    );
-    setAddModalShow(false);
-  }
 
-  async function updateCurrentElderInfo(
-    updateCurrentElderInfo: currentElderInfo,
-    currentName: string
-  ) {
-    await updateReservationElder(
-      updateCurrentElderInfo.machineId,
-      currentName,
-      updateCurrentElderInfo.reservationIdx,
-      updateCurrentElderInfo.currentReservations
-    );
-    setUpdateModalShow(false);
-  }
   const secondsToDisplay = secondsRemaining % 60;
   const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
   const minutesToDisplay = minutesRemaining % 60;
@@ -167,7 +141,12 @@ export const Countdown = (props: any) => {
       </div>
     );
   };
-
+  async function deleteMachineAndFetch(machineId: any) {
+    await deleteMachine(machineId);
+    const reservations = await getReservations();
+    await props.setItems(reservations);
+    await console.log(reservations);
+  }
   function countUp360() {
     setSecondsRemaining(secondsRemaining + 3600);
     console.log(secondsRemaining);
@@ -255,6 +234,14 @@ export const Countdown = (props: any) => {
         >
           정지
         </Button>
+        <Button
+          style={{ margin: "5px", background: "orange" }}
+          onClick={() => deleteMachineAndFetch(props.currentMachineId)}
+          type="button"
+        >
+          삭제
+        </Button>
+
         {/* <Button
           style={{ margin: "5px", background: "orange" }}
           onClick={handleReset}

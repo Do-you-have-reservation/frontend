@@ -80,13 +80,6 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
     await console.log(reservations);
   }
 
-  async function deleteMachineAndFetch(machineId: any) {
-    await deleteMachine(machineId);
-    const reservations = await getReservations();
-    await setItems(reservations);
-    await console.log(reservations);
-  }
-
   async function addCurrentElderInfo(
     currentElderInfo: currentElderInfo,
     currentName: string
@@ -227,18 +220,11 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
                   currentReservations={index.reservations}
                   currentMachineId={index.id}
                   handleAddToQueue={handleAddToQueue}
-                  addModalShow={addModalShow}
                   setAddModalShow={setAddModalShow}
-                  updateModalShow={updateModalShow}
                   setUpdateModalShow={setUpdateModalShow}
                   createUpdateElderModal={createUpdateElderModal}
+                  setItems={setItems}
                 />
-                <button
-                  style={{ background: "orange", width: "30px" }}
-                  onClick={() => deleteMachineAndFetch(index.id)}
-                >
-                  <text style={{ color: "white" }}>삭제</text>
-                </button>
               </BorderdDiv>
               <button
                 style={{
@@ -292,6 +278,9 @@ const BorderdDiv = styled.div`
   border-color: black;
   border-style: solid;
   border-width: 3px;
+  height: 700px;
+  overflow-x: auto;
+  overflow-y: scroll;
 `;
 
 export default SlideSection;
