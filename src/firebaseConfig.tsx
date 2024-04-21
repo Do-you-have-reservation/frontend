@@ -1,14 +1,17 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { deleteDoc, getFirestore, updateDoc } from "firebase/firestore/lite";
 import {
-  getDoc,
+  deleteDoc,
+  getFirestore,
+  updateDoc,
+  query,
+  orderBy,
   doc,
-  setDoc,
   getDocs,
   addDoc,
   collection,
 } from "firebase/firestore/lite";
+
 import { v4 as uuidv4 } from "uuid";
 
 // Your web app's Firebase configuration
@@ -26,15 +29,19 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 export async function getReservations() {
-  const query = await getDocs(collection(db, "reservations"));
+  const querys = await getDocs(
+    query(collection(db, "reservations"), orderBy("timestamp", "asc"))
+  );
 
   const data: { id: string; reservations: any }[] = [];
-  query.forEach((doc) => {
+  console.log(querys);
+  querys.docs.forEach((doc) => {
     console.log(doc.id, doc.data()["datas"]);
     data.push({ id: doc.id, reservations: doc.data()["datas"] });
   });
 
   console.log(data);
+  data.sort();
   return data;
 }
 
@@ -58,8 +65,10 @@ export async function addElder(name: string) {
 }
 
 export async function addMachine() {
+  const date = new Date();
   await addDoc(collection(db, "reservations"), {
     datas: [],
+    timestamp: date.getTime(),
   });
 }
 
