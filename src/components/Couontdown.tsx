@@ -48,6 +48,30 @@ export const Countdown = (props: any) => {
     );
     setItems(await getReservations());
   }
+  const EmptyReservation = (props: any) => {
+    return (
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+        }}
+      >
+        <div
+          style={{
+            width: "100%",
+            height: "500px",
+            backgroundColor: "#ebd2a4",
+
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <text style={{ color: "white" }}> 예약 없음</text>
+        </div>
+      </div>
+    );
+  };
   const Reservations = (props: any) => {
     return status === STATUS.STARTED && props.reservationIdx === 0 ? (
       <div
@@ -291,19 +315,28 @@ export const Countdown = (props: any) => {
       </BorderdDiv>
 
       <BorderdDiv>
-        {props.currentReservations.map(
-          (reservation: string, reservationIdx: any) => {
-            return (
-              <Reservations
-                machineId={props.currentMachineId}
-                machineIdx={props.currentMachineIdx}
-                reservationIdx={reservationIdx}
-                currentReservations={props.currentReservations}
-                name={reservation}
-                createUpdateElderModal={props.createUpdateElderModal}
-              ></Reservations>
-            );
-          }
+        {props.currentReservations.length === 0 ? (
+          <EmptyReservation
+            machineId={props.currentMachineId}
+            machineIdx={props.currentMachineIdx}
+            currentReservations={props.currentReservations}
+            createUpdateElderModal={props.createUpdateElderModal}
+          ></EmptyReservation>
+        ) : (
+          props.currentReservations.map(
+            (reservation: string, reservationIdx: any) => {
+              return (
+                <Reservations
+                  machineId={props.currentMachineId}
+                  machineIdx={props.currentMachineIdx}
+                  reservationIdx={reservationIdx}
+                  currentReservations={props.currentReservations}
+                  name={reservation}
+                  createUpdateElderModal={props.createUpdateElderModal}
+                ></Reservations>
+              );
+            }
+          )
         )}
       </BorderdDiv>
     </div>
