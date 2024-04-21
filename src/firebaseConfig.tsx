@@ -78,6 +78,20 @@ export async function addReservationElder(
     datas: currentReservations,
   });
 }
+
+export async function deleteFirstReservationElder(
+  id: string,
+  currentReservations: any
+) {
+  console.log(id);
+  console.log(currentReservations);
+
+  currentReservations.shift();
+
+  await updateDoc(doc(db, "reservations", id), {
+    datas: currentReservations,
+  });
+}
 export async function updateReservationElder(
   id: string,
   name: string,

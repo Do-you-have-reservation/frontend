@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Button from "react-bootstrap/esm/Button";
 import { styled } from "styled-components";
+import { deleteFirstReservationElder } from "../firebaseConfig";
 
 const STATUS = {
   STARTED: "진행",
@@ -51,13 +52,15 @@ export const Countdown = (props: any) => {
     console.log(secondsRemaining);
   }
 
-  const handleStart = (val: number) => {
-    props.handleAddToQueue(
-      props.currentReservations[stopCount + val] +
-        `님 마사지를 시작합니다. ${props.currentMachineIdx + 1}번 마사지기에 착석해주십시오.`
-    );
+  const handleStart = () => {
+    if (props.currentReservations.length > 0) {
+      props.handleAddToQueue(
+        props.currentReservations[0] +
+          `님 마사지를 시작합니다. ${props.currentMachineIdx + 1}번 마사지기에 착석해주십시오.`
+      );
 
-    setStatus(STATUS.STARTED);
+      setStatus(STATUS.STARTED);
+    }
   };
 
   const handleStop = () => {
@@ -75,18 +78,15 @@ export const Countdown = (props: any) => {
       } else {
         await setStatus(STATUS.STOPPED);
         await setSecondsRemaining(INITIAL_COUNT);
-        await setStopCount((stopCount: any) => stopCount + 1);
 
         await props.handleAddToQueue(
           props.currentReservations[stopCount] + "님 마사지가 종료되었습니다."
         );
 
-        if (stopCount + 1 < props.currentReservations.length) {
-          await handleStart(1);
-        }
-        if (stopCount + 1 === props.currentReservations.length) {
-          setStopCount(0);
-        }
+        await deleteFirstReservationElder(
+          props.currentMachineId,
+          props.currentReservations
+        );
       }
     },
     status === STATUS.STARTED ? 1000 : null
@@ -97,7 +97,7 @@ export const Countdown = (props: any) => {
       <BorderdDiv style={{ display: "flex", justifyContent: "center" }}>
         <Button
           style={{ margin: "5px", background: "orange" }}
-          onClick={() => handleStart(0)}
+          onClick={() => handleStart()}
           type="button"
         >
           시작

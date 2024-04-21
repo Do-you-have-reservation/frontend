@@ -289,6 +289,7 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
                 <Countdown
                   currentMachineIdx={machineIdx}
                   currentReservations={index.reservations}
+                  currentMachineId={index.id}
                   handleAddToQueue={handleAddToQueue}
                 />
                 <button
