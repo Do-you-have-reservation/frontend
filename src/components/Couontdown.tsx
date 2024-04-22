@@ -35,6 +35,7 @@ export const Countdown = (props: any) => {
   const [secondsRemaining, setSecondsRemaining] = useState(INITIAL_COUNT);
   const [status, setStatus] = useState(STATUS.STOPPED);
   const [items, setItems] = useState<any>([]);
+  const [waitingForStart, setWaitingForStart] = useState(false);
 
   const secondsToDisplay = secondsRemaining % 60;
   const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
@@ -234,7 +235,7 @@ export const Countdown = (props: any) => {
     if (props.currentReservations.length > 0) {
       props.handleAddToQueue(
         props.currentReservations[0] +
-          `님 마사지를 시작합니다. ${convertSpeakNumber(
+          `어르신 마사지를 시작합니다. ${convertSpeakNumber(
             props.currentMachineIdx + 1
           )}번 마사지기에 착석해주십시오.`
       );
@@ -254,7 +255,22 @@ export const Countdown = (props: any) => {
     setStatus(STATUS.STOPPED);
     setSecondsRemaining(INITIAL_COUNT);
   };
-
+  useEffect(() => {
+    let timer: any;
+    if (waitingForStart) {
+      timer = setTimeout(() => {
+        if (waitingForStart && status !== STATUS.STARTED) {
+          props.handleAddToQueue(
+            props.currentReservations[0] +
+              `어르신 안마 받으실 차례입니다. ${convertSpeakNumber(
+                props.currentMachineIdx + 1
+              )}번 마사지기에 착석해주십시오.`
+          );
+        }
+      }, 20000);
+    }
+    return () => clearTimeout(timer);
+  }, [waitingForStart, status]);
   useInterval(
     async () => {
       if (secondsRemaining > 0) {
@@ -263,13 +279,22 @@ export const Countdown = (props: any) => {
         await setStatus(STATUS.STOPPED);
         await setSecondsRemaining(INITIAL_COUNT);
         await props.handleAddToQueue(
-          props.currentReservations[0] + "님 마사지가 종료되었습니다."
+          props.currentReservations[0] + "어르신 마사지가 종료되었습니다."
         );
-
         await deleteFirstReservationElder(
           props.currentMachineId,
           props.currentReservations
         );
+
+        if (props.currentReservations.length > 0) {
+          props.handleAddToQueue(
+            props.currentReservations[0] +
+              `어르신 안마 받으실 차례입니다. ${convertSpeakNumber(
+                props.currentMachineIdx + 1
+              )}번 마사지기에 착석해주십시오.`
+          );
+          setWaitingForStart(true);
+        }
       }
     },
     status === STATUS.STARTED ? 1000 : null
