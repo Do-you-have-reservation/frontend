@@ -55,11 +55,15 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
   const notify = (text: string) => toast(text);
   async function deleteSelectedElder(elderId: string) {
     await deleteElder(elderId);
-    setElders(await getElders());
+    setElders(
+      await (await getElders()).sort((a, b) => a.name.localeCompare(b.name))
+    );
   }
 
   async function createAddElderModal(props: any) {
-    setElders(await getElders());
+    setElders(
+      await (await getElders()).sort((a, b) => a.name.localeCompare(b.name))
+    );
     await console.log(elders);
     await setCurrentElderInfo({
       machineId: props.machineId,
@@ -70,7 +74,9 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
     await setAddModalShow(true);
   }
   async function createUpdateElderModal(props: any) {
-    setElders(await getElders());
+    setElders(
+      await (await getElders()).sort((a, b) => a.name.localeCompare(b.name))
+    );
     await console.log(elders);
     await setCurrentElderInfo({
       machineId: props.machineId,
