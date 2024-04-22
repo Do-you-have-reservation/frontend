@@ -161,10 +161,7 @@ export const Countdown = (props: any) => {
             })
           }
         >
-          <text style={{ color: "black", fontSize: "60px" }}>
-            {" "}
-            {props.name}
-          </text>
+          <text style={{ color: "black", fontSize: "60px" }}>{props.name}</text>
         </Button>
         <Button
           style={{
@@ -199,7 +196,7 @@ export const Countdown = (props: any) => {
       await console.log(reservations);
     }
 
-    if(status === STATUS.STARTED){
+    if (status === STATUS.STARTED) {
       notify();
     }
   }
@@ -237,7 +234,9 @@ export const Countdown = (props: any) => {
     if (props.currentReservations.length > 0) {
       props.handleAddToQueue(
         props.currentReservations[0] +
-          `님 마사지를 시작합니다. ${convertSpeakNumber(props.currentMachineIdx + 1)}번 마사지기에 착석해주십시오.`
+          `님 마사지를 시작합니다. ${convertSpeakNumber(
+            props.currentMachineIdx + 1
+          )}번 마사지기에 착석해주십시오.`
       );
 
       setStatus(STATUS.STARTED);

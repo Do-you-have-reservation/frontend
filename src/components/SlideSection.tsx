@@ -52,8 +52,7 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
   const [updateModalShow, setUpdateModalShow] = React.useState(false);
   const [elders, setElders] = useState<any>([]);
   const [currentElderInfo, setCurrentElderInfo] = useState<currentElderInfo>();
-  const notify = (text:string) =>
-    toast(text);
+  const notify = (text: string) => toast(text);
   async function deleteSelectedElder(elderId: string) {
     await deleteElder(elderId);
     setElders(await getElders());
@@ -82,16 +81,14 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
     await setUpdateModalShow(true);
   }
   async function createMachine() {
-    if(items.length >29){
-      notify("최대 30개까지 마사지 기계를 등록할 수 있습니다.")
-    }else{
-
+    if (items.length > 29) {
+      notify("최대 30개까지 마사지 기계를 등록할 수 있습니다.");
+    } else {
       await addMachine();
       const reservations = await getReservations();
       await setItems(reservations);
       await console.log(reservations);
     }
-
   }
 
   async function addCurrentElderInfo(
@@ -157,7 +154,10 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
                       updateCurrentElderInfo(props.currentElderInfo, elder.name)
                     }
                   >
-                    <text style={{ color: "black" }}> {elder.name} </text>
+                    <text style={{ color: "black", fontSize: "60px" }}>
+                      {" "}
+                      {elder.name}{" "}
+                    </text>
                   </Button>
                   <Button
                     style={{
@@ -220,7 +220,9 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
                       addCurrentElderInfo(props.currentElderInfo, elder.name)
                     }
                   >
-                    <text style={{ color: "black" }}> {elder.name} </text>
+                    <text style={{ color: "black", fontSize: "60px" }}>
+                      {elder.name}
+                    </text>
                   </Button>
                   <Button
                     style={{
@@ -341,7 +343,7 @@ const BorderdDiv = styled.div`
   border-color: #ece6cc;
   border-style: solid;
   border-width: 3px;
-  height: 700px;
+  height: 1000px;
   overflow-x: auto;
   overflow-y: scroll;
 `;
