@@ -424,6 +424,18 @@ export const Countdown = (props: any) => {
           </Button>
         </div>
       </BorderdDiv>
+      <BorderdDiv
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          justifyItems: "center",
+        }}
+      >
+        <text style={{ textAlign: "center", fontSize: "30px" }}>
+          남은 예약 : {props.currentReservations.length}명
+        </text>
+      </BorderdDiv>
 
       <BorderdDiv>
         {props.currentReservations.length === 0 ? (
