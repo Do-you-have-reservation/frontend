@@ -16,6 +16,7 @@ import {
 import Modal from "react-bootstrap/Modal";
 import { koreanNumbers } from "../utils/koreanNumbers";
 import { IoIosNutrition } from "react-icons/io";
+import { useStore } from "../store/store.module";
 
 const STATUS = {
   STARTED: "진행",
@@ -36,6 +37,7 @@ export const Countdown = (props: any) => {
   const [status, setStatus] = useState(STATUS.STOPPED);
   const [items, setItems] = useState<any>([]);
   const [waitingForStart, setWaitingForStart] = useState(false);
+  const updateTimes = useStore((state: any) => state.updateTimes);
 
   const secondsToDisplay = secondsRemaining % 60;
   const minutesRemaining = (secondsRemaining - secondsToDisplay) / 60;
@@ -266,6 +268,7 @@ export const Countdown = (props: any) => {
                 props.currentMachineIdx + 1
               )}번 마사지기에 착석해주십시오.`
           );
+          setWaitingForStart(false);
         }
       }, 20000);
     }
@@ -275,6 +278,7 @@ export const Countdown = (props: any) => {
     async () => {
       if (secondsRemaining > 0) {
         setSecondsRemaining((secondsRemaining) => secondsRemaining - 1);
+        updateTimes(props.currentMachineId, secondsRemaining);
       } else {
         await setStatus(STATUS.STOPPED);
         await setSecondsRemaining(INITIAL_COUNT);
@@ -342,21 +346,19 @@ export const Countdown = (props: any) => {
           >
             <text style={{ color: "black" }}>up</text>
           </Button>
-          <BorderdDiv>
-            <div
-              style={{
-                position: "relative",
-              }}
-            >
-              <Display
-                value={twoDigits(hoursToDisplay)}
-                color="#ff5e23"
-                count={2}
-                height={100}
-                skew={false}
-              ></Display>
-            </div>
-          </BorderdDiv>
+          <div
+            style={{
+              position: "relative",
+            }}
+          >
+            <Display
+              value={twoDigits(hoursToDisplay)}
+              color="#ff5e23"
+              count={2}
+              height={150}
+              skew={false}
+            ></Display>
+          </div>
 
           <Button
             style={{ background: "white", borderColor: "#ece6cc" }}
@@ -372,21 +374,19 @@ export const Countdown = (props: any) => {
           >
             <text style={{ color: "black" }}>up</text>
           </Button>
-          <BorderdDiv>
-            <div
-              style={{
-                position: "relative",
-              }}
-            >
-              <Display
-                value={twoDigits(minutesToDisplay)}
-                color="#ff5e23"
-                count={2}
-                height={100}
-                skew={false}
-              ></Display>
-            </div>
-          </BorderdDiv>
+          <div
+            style={{
+              position: "relative",
+            }}
+          >
+            <Display
+              value={twoDigits(minutesToDisplay)}
+              color="#ff5e23"
+              count={2}
+              height={150}
+              skew={false}
+            ></Display>
+          </div>
 
           <Button
             style={{ background: "white", borderColor: "#ece6cc" }}
@@ -402,21 +402,19 @@ export const Countdown = (props: any) => {
           >
             <text style={{ color: "black" }}>up</text>
           </Button>
-          <BorderdDiv>
-            <div
-              style={{
-                position: "relative",
-              }}
-            >
-              <Display
-                value={twoDigits(secondsToDisplay)}
-                color="#ff5e23"
-                count={2}
-                height={100}
-                skew={false}
-              ></Display>
-            </div>
-          </BorderdDiv>
+          <div
+            style={{
+              position: "relative",
+            }}
+          >
+            <Display
+              value={twoDigits(secondsToDisplay)}
+              color="#ff5e23"
+              count={2}
+              height={150}
+              skew={false}
+            ></Display>
+          </div>
 
           <Button
             style={{ background: "white", borderColor: "#ece6cc" }}

@@ -12,7 +12,7 @@ import { ToastContainer } from "react-toastify";
 
 const MassageChairReservationSystem: React.FC = () => {
   const [showModal, setShowModal] = useState(false);
-
+  const [items, setItems] = useState<any>([]);
   const handleShowModal = () => setShowModal(true);
   const handleCloseModal = () => setShowModal(false);
 
@@ -40,7 +40,16 @@ const MassageChairReservationSystem: React.FC = () => {
     <div>
       <HeaderSection></HeaderSection>
       <BlankSection></BlankSection>
-      <SlideSection handleAddToQueue={handleAddToQueue}></SlideSection>
+      <SlideSection
+        items={items}
+        setItems={setItems}
+        handleAddToQueue={handleAddToQueue}
+      ></SlideSection>
+      <ReservationSection
+        items={items}
+        setItems={setItems}
+        handleAddToQueue={handleAddToQueue}
+      ></ReservationSection>
       <Button
         variant="outlined"
         size="lg"

@@ -25,7 +25,7 @@ const ScrollArea = styled.div`
   overflow-x: auto;
   overflow-y: scroll;
   width: 100%;
-  height: 1000px;
+  height: 100vh;
   margin: 4px;
   border-radius: 3px;
   border-color: #ece6cc;
@@ -46,8 +46,7 @@ interface currentElderInfo {
   currentReservations: any;
 }
 
-const SlideSection = ({ handleAddToQueue }: Props) => {
-  const [items, setItems] = useState<any>([]);
+const SlideSection = ({ handleAddToQueue, setItems, items }: Props) => {
   const [addModalShow, setAddModalShow] = React.useState(false);
   const [updateModalShow, setUpdateModalShow] = React.useState(false);
   const [elders, setElders] = useState<any>([]);
@@ -154,7 +153,7 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
                       height: "200px",
                       backgroundColor: "white",
                       marginTop: "5px",
-                      borderColor: "#ece6cc",
+                      borderColor: "#e3ccec",
                     }}
                     onClick={() =>
                       updateCurrentElderInfo(props.currentElderInfo, elder.name)
@@ -291,7 +290,7 @@ const SlideSection = ({ handleAddToQueue }: Props) => {
               <Button
                 style={{
                   width: "100%",
-                  height: "140px",
+                  height: "50px",
                   backgroundColor: "white",
                   marginTop: "5px",
                   display: "flex",
@@ -349,7 +348,7 @@ const BorderdDiv = styled.div`
   border-color: #ece6cc;
   border-style: solid;
   border-width: 3px;
-  height: 1000px;
+  height: 95vh;
   overflow-x: auto;
   overflow-y: scroll;
 `;

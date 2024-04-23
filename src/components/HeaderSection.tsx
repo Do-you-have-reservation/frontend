@@ -15,7 +15,7 @@ const Header = styled.div`
   text-align: center;
   flex-direction: column;
   width: 100%;
-  height: 150px;
+  height: 10%;
   justify-content: center;
   align-items: center;
   background-color: white;
