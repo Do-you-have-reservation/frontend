@@ -72,7 +72,7 @@ export const Countdown = (props: any) => {
         <div
           style={{
             width: "100%",
-            height: "500px",
+            height: "410px",
             backgroundColor: "white",
 
             display: "flex",
@@ -440,7 +440,7 @@ export const Countdown = (props: any) => {
       <BorderdDiv>
         {props.currentReservations.length === 0 ? (
           <div
-            style={{ overflowX: "auto", overflowY: "scroll", height: "500px" }}
+            style={{ overflowX: "auto", overflowY: "scroll", height: "410px" }}
           >
             <EmptyReservation
               machineId={props.currentMachineId}
