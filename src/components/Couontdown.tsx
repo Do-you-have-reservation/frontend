@@ -96,7 +96,7 @@ export const Countdown = (props: any) => {
         <Button
           style={{
             width: "100%",
-            height: "140px",
+            height: "100px",
             backgroundColor: "white",
             marginTop: "5px",
             display: "flex",
@@ -147,7 +147,7 @@ export const Countdown = (props: any) => {
         <Button
           style={{
             width: "100%",
-            height: "140px",
+            height: "100px",
             backgroundColor: "white",
             marginTop: "5px",
             display: "flex",
@@ -339,7 +339,7 @@ export const Countdown = (props: any) => {
       </BorderdDiv>
 
       <BorderdDiv style={{ flexDirection: "row", display: "flex" }}>
-        <div style={{ flexDirection: "column", display: "flex" }}>
+        {/* <div style={{ flexDirection: "column", display: "flex" }}>
           <Button
             style={{ background: "white", borderColor: "#ece6cc" }}
             onClick={countUp360}
@@ -366,7 +366,7 @@ export const Countdown = (props: any) => {
           >
             <text style={{ color: "black" }}>down</text>
           </Button>
-        </div>
+        </div> */}
         <div style={{ flexDirection: "column", display: "flex" }}>
           <Button
             style={{ background: "white", borderColor: "#ece6cc" }}
@@ -383,7 +383,7 @@ export const Countdown = (props: any) => {
               value={twoDigits(minutesToDisplay)}
               color="#ff5e23"
               count={2}
-              height={150}
+              height={120}
               skew={false}
             ></Display>
           </div>
@@ -411,7 +411,7 @@ export const Countdown = (props: any) => {
               value={twoDigits(secondsToDisplay)}
               color="#ff5e23"
               count={2}
-              height={150}
+              height={120}
               skew={false}
             ></Display>
           </div>
@@ -439,27 +439,39 @@ export const Countdown = (props: any) => {
 
       <BorderdDiv>
         {props.currentReservations.length === 0 ? (
-          <EmptyReservation
-            machineId={props.currentMachineId}
-            machineIdx={props.currentMachineIdx}
-            currentReservations={props.currentReservations}
-            createUpdateElderModal={props.createUpdateElderModal}
-          ></EmptyReservation>
+          <div
+            style={{ overflowX: "auto", overflowY: "scroll", height: "500px" }}
+          >
+            <EmptyReservation
+              machineId={props.currentMachineId}
+              machineIdx={props.currentMachineIdx}
+              currentReservations={props.currentReservations}
+              createUpdateElderModal={props.createUpdateElderModal}
+            ></EmptyReservation>
+          </div>
         ) : (
-          props.currentReservations.map(
-            (reservation: string, reservationIdx: any) => {
-              return (
-                <Reservations
-                  machineId={props.currentMachineId}
-                  machineIdx={props.currentMachineIdx}
-                  reservationIdx={reservationIdx}
-                  currentReservations={props.currentReservations}
-                  name={reservation}
-                  createUpdateElderModal={props.createUpdateElderModal}
-                ></Reservations>
-              );
-            }
-          )
+          <div
+            style={{
+              overflowX: "auto",
+              overflowY: "scroll",
+              height: "410px",
+            }}
+          >
+            {props.currentReservations.map(
+              (reservation: string, reservationIdx: any) => {
+                return (
+                  <Reservations
+                    machineId={props.currentMachineId}
+                    machineIdx={props.currentMachineIdx}
+                    reservationIdx={reservationIdx}
+                    currentReservations={props.currentReservations}
+                    name={reservation}
+                    createUpdateElderModal={props.createUpdateElderModal}
+                  ></Reservations>
+                );
+              }
+            )}
+          </div>
         )}
       </BorderdDiv>
     </div>

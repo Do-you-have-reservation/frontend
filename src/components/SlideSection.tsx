@@ -22,20 +22,18 @@ import { toast } from "react-toastify";
 const ScrollArea = styled.div`
   display: flex;
   flex-direction: row;
-  overflow-x: auto;
-  overflow-y: scroll;
   width: 100%;
-  height: 100vh;
+  height: 900px;
   margin: 4px;
   border-radius: 3px;
   border-color: #ece6cc;
   border-style: solid;
   border-width: 3px;
+  overflow-x: scroll;
 `;
 
 const Item = styled.div`
-  flex: 0 0 500px;
-  margin: 0 10px;
+  flex: 0 0 460px;
   background-color: white;
 `;
 
@@ -348,9 +346,7 @@ const BorderdDiv = styled.div`
   border-color: #ece6cc;
   border-style: solid;
   border-width: 3px;
-  height: 95vh;
-  overflow-x: auto;
-  overflow-y: scroll;
+  height: 835px;
 `;
 
 export default SlideSection;

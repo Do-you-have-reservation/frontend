@@ -172,7 +172,7 @@ const ReservationSection = ({ setItems }: Props) => {
       <ReservationDiv>
         <Button
           onClick={() => reserveAtFastestMachine()}
-          style={{ width: "300px", height: "100px" }}
+          style={{ width: "300px", height: "50px", margin: "5px" }}
         >
           가장 빠른 예약하기
         </Button>
@@ -193,7 +193,7 @@ const ReservationDiv = styled.div`
   text-align: center;
   flex-direction: column;
   width: 100%;
-  height: 200px;
+  height: 60px;
   justify-content: center;
   align-items: center;
   background-color: white;
